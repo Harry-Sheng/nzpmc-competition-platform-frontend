@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "../style/NavBar.css";
 import Logo from "../assets/nzpmcLogo.png";
 
-const NavBar = ({ isLoggedIn, onLogout }) => {
+const NavBar = () => {
   return (
     <nav className="navbar">
       <div className="navbar-logo">
@@ -13,17 +13,9 @@ const NavBar = ({ isLoggedIn, onLogout }) => {
         </Link>
       </div>
       <div className="navbar-links">
-        {!isLoggedIn ? (
-          <Link to="/login" className="navbar-link">
-            Login
-          </Link>
-        ) : (
-          <>
-            <button onClick={onSignOut} className="navbar-button">
-              Sign out
-            </button>
-          </>
-        )}
+        <Link to="/login" className="navbar-link">
+          Login
+        </Link>
       </div>
     </nav>
   );
