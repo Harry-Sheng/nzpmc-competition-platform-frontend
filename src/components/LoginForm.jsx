@@ -6,13 +6,13 @@ const LoginForm = ({ email, password, setEmail, setPassword, handleLogin }) => {
     <Form
       onSubmit={handleLogin}
       className="p-4 border rounded shadow-sm bg-light"
-      style={{ maxWidth: "400px", margin: "auto" }}
+      style={{ margin: "auto" }}
     >
       <h2 className="text-center mb-4">Login</h2>
       <Form.Group className="mb-3" controlId="formEmail">
         <Form.Label>Email</Form.Label>
         <Form.Control
-          type="email"
+          type="text"
           placeholder="Enter your email"
           value={email}
           onChange={({ target }) => setEmail(target.value)}
