@@ -26,7 +26,6 @@ const LoginPage = () => {
         setErrorMessage(null);
       }, 5000);
     }
-    console.log("logging in with", email, password);
   };
 
   return (
