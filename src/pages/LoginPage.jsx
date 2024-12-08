@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
 import loginService from "../services/login";
 import Notification from "../components/Notification";
+import LoginForm from "../components/LoginForm";
+
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,29 +29,6 @@ const LoginPage = () => {
     console.log("logging in with", email, password);
   };
 
-  const loginForm = () => (
-    <form onSubmit={handleLogin}>
-      <div>
-        email
-        <input
-          type="text"
-          value={email}
-          name="email"
-          onChange={({ target }) => setEmail(target.value)}
-        />
-      </div>
-      <div>
-        password
-        <input
-          type="password"
-          value={password}
-          name="Password"
-          onChange={({ target }) => setPassword(target.value)}
-        />
-      </div>
-      <button type="submit">login</button>
-    </form>
-  );
   return (
     <div className="container">
       <Header
@@ -60,7 +39,15 @@ const LoginPage = () => {
         }
       />
       <Notification message={errorMessage} />
-      {user === null && loginForm()}
+      {user === null && (
+        <LoginForm
+          email={email}
+          password={password}
+          setEmail={setEmail}
+          setPassword={setPassword}
+          handleLogin={handleLogin}
+        />
+      )}
     </div>
   );
 };
