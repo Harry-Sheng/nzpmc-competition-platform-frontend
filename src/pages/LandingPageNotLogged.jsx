@@ -19,9 +19,7 @@ const LandingPageNotLogged = () => {
     <div className="container">
       <Header
         title={"Welcome to NZPMC"}
-        subtitle={
-          "All-in-one portal for NZPMC event registration, payment, resultdashboard."
-        }
+        subtitle={"Portal for NZPMC event registration."}
       />
       <Notification
         message="You are not logged in. Click login to register for event"
