@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
 import LandingPageLogged from "./LandingPageLogged";
 import LandingPageNotLogged from "./LandingPageNotLogged";
