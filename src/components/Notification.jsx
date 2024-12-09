@@ -1,11 +1,15 @@
-import "../style/Notification.css";
+import { Alert } from "react-bootstrap";
 
-const Notification = ({ message }) => {
-  if (message === null) {
+const Notification = ({ message, variant }) => {
+  if (!message) {
     return null;
   }
 
-  return <div className="error">{message}</div>;
+  return (
+    <Alert variant={variant} className="notification">
+      {message}
+    </Alert>
+  );
 };
 
 export default Notification;

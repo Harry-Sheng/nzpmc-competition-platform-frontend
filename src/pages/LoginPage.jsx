@@ -53,7 +53,7 @@ const LoginPage = () => {
           Use your registered email to sign in."
         }
       />
-      <Notification message={errorMessage} />
+      <Notification message={errorMessage} variant="danger" />
       {user === null && (
         <LoginForm
           email={email}
