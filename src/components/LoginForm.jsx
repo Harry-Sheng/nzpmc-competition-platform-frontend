@@ -1,5 +1,6 @@
 import React from "react";
 import { Form, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const LoginForm = ({ email, password, setEmail, setPassword, handleLogin }) => {
   return (
@@ -27,9 +28,18 @@ const LoginForm = ({ email, password, setEmail, setPassword, handleLogin }) => {
           onChange={({ target }) => setPassword(target.value)}
         />
       </Form.Group>
-      <Button variant="primary" type="submit" className="w-100">
-        Login
-      </Button>
+      <div className="d-flex justify-content-between">
+        <Link to="/signup" className="w-50 me-2">
+          <Button variant="secondary" className="w-100">
+            Don't have account? Create account
+          </Button>
+        </Link>
+        <Link to="/" className="w-50">
+          <Button variant="primary" type="submit" className="w-100">
+            Login
+          </Button>
+        </Link>
+      </div>
     </Form>
   );
 };
