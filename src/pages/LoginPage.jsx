@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from "react";
+import { useState, useContext } from "react";
 import Header from "../components/Header";
 import loginService from "../services/login";
 import Notification from "../components/Notification";
 import LoginForm from "../components/LoginForm";
+import { UserContext } from "../context/UserContext";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [user, setUser] = useState(null);
+  const { user, setUser } = useContext(UserContext);
   const [errorMessage, setErrorMessage] = useState(null);
 
   const handleLogin = async (event) => {
@@ -17,9 +18,15 @@ const LoginPage = () => {
         email,
         password,
       });
+      window.localStorage.setItem("loggedUser", JSON.stringify(user));
       setUser(user);
       setEmail("");
       setPassword("");
+
+      setTimeout(() => {
+        window.localStorage.removeItem("loggedUser");
+        setUser(null);
+      }, 1000 * 60 * 5);
     } catch (exception) {
       setErrorMessage("Wrong Email or Password");
       setTimeout(() => {
