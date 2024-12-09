@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
-import singUpService from "../services/SignUp";
+import userService from "../services/User";
 import Notification from "../components/Notification";
 import SignUpForm from "../components/SignUpForm";
 import { UserContext } from "../context/UserContext";
@@ -16,7 +16,7 @@ const SignUpPage = () => {
   const handleSignUp = async (event) => {
     event.preventDefault();
     try {
-      const user = await singUpService.signUp({
+      const user = await userService.signUp({
         email,
         password,
         name,
