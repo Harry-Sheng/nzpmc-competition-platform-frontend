@@ -1,7 +1,10 @@
 import { Card, Row, Col, Button } from "react-bootstrap";
 import Exam from "../assets/exam.png";
+import { useState, useEffect, useContext } from "react";
+import { UserContext } from "../context/UserContext";
 
-const EventListWithUserDetails = ({ events, user }) => {
+const EventListWithUserDetails = ({ events }) => {
+  const { user } = useContext(UserContext);
   return (
     <Row className="g-4">
       {/* Events Section */}
