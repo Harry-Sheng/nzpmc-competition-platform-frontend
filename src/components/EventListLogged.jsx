@@ -2,9 +2,21 @@ import { Card, Row, Col, Button } from "react-bootstrap";
 import Exam from "../assets/exam.png";
 import { useState, useEffect, useContext } from "react";
 import { UserContext } from "../context/UserContext";
+import userService from "../services/User";
 
 const EventListWithUserDetails = ({ events }) => {
   const { user } = useContext(UserContext);
+  const [userEvents, setUserEvents] = useState([]);
+
+  useEffect(() => {
+    const loadUserEvents = async () => {
+      const userEvents = await userService.fetchUserEvents(user.token);
+      setUserEvents(userEvents);
+    };
+
+    loadUserEvents();
+  }, []);
+
   return (
     <Row className="g-4">
       {/* Events Section */}
