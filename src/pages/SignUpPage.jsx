@@ -43,7 +43,7 @@ const SignUpPage = () => {
            to our exclusive competitions and workshops."
         }
       />
-      <Notification message={errorMessage} />
+      <Notification message={errorMessage} variant="danger" />
       {user === null && (
         <SignUpForm
           email={email}
