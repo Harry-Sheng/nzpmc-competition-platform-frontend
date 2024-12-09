@@ -1,15 +1,21 @@
-import React, { useState, useEffect } from "react";
-import Header from "../components/Header";
+import React, { useContext } from "react";
+import { UserContext } from "../context/UserContext";
+import LandingPageLogged from "./LandingPageLogged";
+import LandingPageNotLogged from "./LandingPageNotLogged";
 
 const LandingPage = () => {
+  const { user } = useContext(UserContext);
   return (
     <div className="container">
-      <Header
-        title={"Welcome to NZPMC"}
-        subtitle={
-          "All-in-one portal for NZPMC event registration, payment, resultdashboard."
-        }
-      />
+      {user ? (
+        <div>
+          <LandingPageLogged />
+        </div>
+      ) : (
+        <div>
+          <LandingPageNotLogged />
+        </div>
+      )}
     </div>
   );
 };
