@@ -34,11 +34,9 @@ const LoginForm = ({ email, password, setEmail, setPassword, handleLogin }) => {
             Don't have account? Create account
           </Button>
         </Link>
-        <Link to="/" className="w-50">
-          <Button variant="primary" type="submit" className="w-100">
-            Login
-          </Button>
-        </Link>
+        <Button variant="primary" type="submit" className="w-50">
+          Login
+        </Button>
       </div>
     </Form>
   );

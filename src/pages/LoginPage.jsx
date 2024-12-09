@@ -1,4 +1,5 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import loginService from "../services/Login";
 import Notification from "../components/Notification";
@@ -10,6 +11,14 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const { user, setUser } = useContext(UserContext);
   const [errorMessage, setErrorMessage] = useState(null);
+  const navigate = useNavigate();
+
+  //redirect to landing page if logged in
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user]);
 
   const handleLogin = async (event) => {
     event.preventDefault();
