@@ -10,6 +10,10 @@ const create = (newObject) => {
   return axios.post(baseUrl, newObject);
 };
 
+const getUsers = () => {
+  return axios.get(baseUrl);
+};
+
 const deleteEntries = (id) => {
   return axios.delete(`${baseUrl}/${id}`);
 };
@@ -51,4 +55,5 @@ export default {
   deleteEntries,
   fetchUserEvents,
   updateUserName,
+  getUsers,
 };

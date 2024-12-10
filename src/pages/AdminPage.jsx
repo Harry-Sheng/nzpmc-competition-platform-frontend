@@ -8,14 +8,16 @@ import AdminDashboard from "../components/Admin";
 
 const AdminPage = () => {
   const [events, setEvents] = useState([]);
-  const [userEvents, setUserEvents] = useState([]);
+  const [users, setUsers] = useState([]);
   const { user } = useContext(UserContext);
 
   useEffect(() => {
     eventsService.fetchEvents().then((response) => {
-      console.log("event promise fulfilled");
-      console.log(response.data);
       setEvents(response.data);
+    });
+    userService.getUsers().then((response) => {
+      console.log("Users:", response.data);
+      setUsers(response.data);
     });
   }, []);
 
@@ -25,7 +27,7 @@ const AdminPage = () => {
         title={"Welcome Admin"}
         subtitle={"Here is the Admin Dashboard"}
       />
-      <AdminDashboard events={events}></AdminDashboard>
+      <AdminDashboard events={events} users={users}></AdminDashboard>
     </div>
   );
 };
