@@ -17,6 +17,11 @@ const EventListWithUserDetails = ({ events }) => {
     loadUserEvents();
   }, []);
 
+  const isUserJoined = (eventId) => {
+    console.log(eventId);
+    return userEvents.some((userEvent) => userEvent._id === eventId);
+  };
+
   return (
     <Row className="g-4">
       {/* Events Section */}
@@ -38,7 +43,7 @@ const EventListWithUserDetails = ({ events }) => {
                 <p className="text-muted mb-0">{event.date}</p>
               </Col>
               <Col xs={3} className="ps-3">
-                {event.joined ? (
+                {isUserJoined(event._id) ? (
                   <Button variant="outline-secondary" disabled>
                     Joined!
                   </Button>
