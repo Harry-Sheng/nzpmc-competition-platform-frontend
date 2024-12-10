@@ -1,13 +1,22 @@
 import { Card, Row, Col, Button } from "react-bootstrap";
 import Exam from "../assets/exam.png";
-import { useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { UserContext } from "../context/UserContext";
+import eventService from "../services/Events";
 
-const EventListWithUserDetails = ({ events, userEvents }) => {
+const EventListWithUserDetails = ({ events, userEvents, setUserEvents }) => {
   const { user } = useContext(UserContext);
 
   const isUserJoined = (eventId) => {
+    if (!userEvents) {
+      return false;
+    }
     return userEvents.some((userEvent) => userEvent._id === eventId);
+  };
+
+  const handleJoin = async (eventId) => {
+    const updatedEvent = await eventService.joinEvent(eventId, user.token);
+    setUserEvents((prevUserEvents) => [...prevUserEvents, updatedEvent.event]);
   };
 
   return (
@@ -36,7 +45,12 @@ const EventListWithUserDetails = ({ events, userEvents }) => {
                     Joined!
                   </Button>
                 ) : (
-                  <Button variant="primary">Join</Button>
+                  <Button
+                    variant="primary"
+                    onClick={() => handleJoin(event._id)}
+                  >
+                    Join
+                  </Button>
                 )}
               </Col>
             </Card.Body>

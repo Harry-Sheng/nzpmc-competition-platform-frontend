@@ -32,10 +32,13 @@ const LoginPage = () => {
       setEmail("");
       setPassword("");
 
-      setTimeout(() => {
-        window.localStorage.removeItem("loggedUser");
-        setUser(null);
-      }, 1000 * 60 * 5);
+      setTimeout(
+        () => {
+          window.localStorage.removeItem("loggedUser");
+          setUser(null);
+        },
+        1000 * 60 * 5
+      );
     } catch (exception) {
       setErrorMessage("Wrong Email or Password");
       setTimeout(() => {

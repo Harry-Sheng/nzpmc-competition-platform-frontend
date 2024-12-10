@@ -30,7 +30,11 @@ const LandingPageLogged = () => {
         title={"Welcome to NZPMC"}
         subtitle={"Portal for NZPMC event registration."}
       />
-      <EventListLogged events={events} userEvents={userEvents} />
+      <EventListLogged
+        events={events}
+        userEvents={userEvents}
+        setUserEvents={setUserEvents}
+      />
     </div>
   );
 };
