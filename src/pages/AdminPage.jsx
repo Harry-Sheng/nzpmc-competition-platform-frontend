@@ -13,6 +13,7 @@ const AdminPage = () => {
 
   useEffect(() => {
     eventsService.fetchEvents().then((response) => {
+      console.log("Events:", response.data);
       setEvents(response.data);
     });
     userService.getUsers().then((response) => {
@@ -27,7 +28,7 @@ const AdminPage = () => {
         title={"Welcome Admin"}
         subtitle={"Here is the Admin Dashboard"}
       />
-      <AdminDashboard events={events} users={users}></AdminDashboard>
+      <AdminDashboard users={users}></AdminDashboard>
     </div>
   );
 };

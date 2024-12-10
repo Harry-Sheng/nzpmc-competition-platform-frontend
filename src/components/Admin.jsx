@@ -6,11 +6,27 @@ import eventService from "../services/Events";
 import Notification from "../components/Notification";
 import CreateEventForm from "../components/CreateEventForm";
 
-const AdminDashboard = ({ events, users }) => {
+const AdminDashboard = ({ users }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    fetchEvents();
+  }, []);
+
+  const fetchEvents = async () => {
+    try {
+      const updatedEvents = await eventService.fetchEvents();
+      setEvents(updatedEvents.data);
+      // This is very important it set the events immediately after fetching
+      console.log("Events after fetchEvents (not state):", updatedEvents.data);
+    } catch (error) {
+      console.error("Failed to fetch events:", error);
+    }
+  };
 
   const handleCreateEvent = async (event) => {
     event.preventDefault();
@@ -20,10 +36,11 @@ const AdminDashboard = ({ events, users }) => {
         description,
         date,
       });
-      console.log("Event created successfully:", createdEvent);
       setName("");
       setDescription("");
       setDate("");
+      await fetchEvents();
+      console.log("Events:", events);
     } catch (error) {
       setErrorMessage("Event already exists");
       setTimeout(() => {
