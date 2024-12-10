@@ -76,7 +76,10 @@ const EventListWithUserDetails = ({ events, userEvents, setUserEvents }) => {
         <Card>
           <Card.Body>
             <h5>User Details</h5>
-            <p>Name: {user.name}</p>
+            <p>
+              Name: {user.name}
+              <br /> Email: {user.email}
+            </p>
             <Button variant="secondary" onClick={() => setShowModal(true)}>
               Edit Name
             </Button>
