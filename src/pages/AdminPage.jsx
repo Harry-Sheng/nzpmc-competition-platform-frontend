@@ -16,11 +16,13 @@ const AdminPage = () => {
   //redirect to landing page if user is not admin or/and not logged in
   useEffect(() => {
     console.log("User:", user);
-    if (user === null) return;
-    if (user === null || user.role !== "admin") {
+    if (user === null) {
+      return;
+    }
+    if (!user || user?.role !== "admin") {
       navigate("/");
     }
-  }, [user]);
+  }, [user, navigate]);
 
   useEffect(() => {
     eventsService.fetchEvents().then((response) => {
