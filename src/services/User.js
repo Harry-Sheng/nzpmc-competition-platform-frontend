@@ -31,9 +31,24 @@ const fetchUserEvents = async (token) => {
   }
 };
 
+const updateUserName = async (newName, token) => {
+  const response = await axios.put(
+    `${baseUrl}/name`,
+    { name: newName },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  console.log("Updated User Name:", response.data);
+  return response.data;
+};
+
 export default {
   signUp,
   create,
   deleteEntries,
   fetchUserEvents,
+  updateUserName,
 };

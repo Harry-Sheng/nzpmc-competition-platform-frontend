@@ -1,11 +1,14 @@
-import { Card, Row, Col, Button } from "react-bootstrap";
+import { Card, Row, Col, Button, Modal, Form } from "react-bootstrap";
 import Exam from "../assets/exam.png";
 import { useState, useEffect, useContext } from "react";
 import { UserContext } from "../context/UserContext";
 import eventService from "../services/Events";
+import userService from "../services/User";
 
 const EventListWithUserDetails = ({ events, userEvents, setUserEvents }) => {
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
+  const [showModal, setShowModal] = useState(false);
+  const [newName, setNewName] = useState("");
 
   const isUserJoined = (eventId) => {
     if (!userEvents) {
@@ -17,6 +20,16 @@ const EventListWithUserDetails = ({ events, userEvents, setUserEvents }) => {
   const handleJoin = async (eventId) => {
     const updatedEvent = await eventService.joinEvent(eventId, user.token);
     setUserEvents((prevUserEvents) => [...prevUserEvents, updatedEvent.event]);
+  };
+
+  const handleNameChange = async () => {
+    try {
+      const updatedUser = await userService.updateUserName(newName, user.token);
+      setUser((prevUser) => ({ ...prevUser, name: updatedUser.name }));
+      setShowModal(false);
+    } catch (error) {
+      console.error("Error updating name:", error);
+    }
   };
 
   return (
@@ -64,10 +77,40 @@ const EventListWithUserDetails = ({ events, userEvents, setUserEvents }) => {
           <Card.Body>
             <h5>User Details</h5>
             <p>Name: {user.name}</p>
-            <Button variant="secondary">Edit Name</Button>
+            <Button variant="secondary" onClick={() => setShowModal(true)}>
+              Edit Name
+            </Button>
           </Card.Body>
         </Card>
       </Col>
+
+      {/* Modal for Changing Name */}
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Change Name</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3">
+              <Form.Label>New Name</Form.Label>
+              <Form.Control
+                type="text"
+                value={newName}
+                onChange={(e) => setNewName(e.target.value)}
+                placeholder="Enter new name"
+              />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>
+            Cancel
+          </Button>
+          <Button variant="primary" onClick={handleNameChange}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Row>
   );
 };
