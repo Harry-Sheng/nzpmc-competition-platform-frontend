@@ -13,10 +13,10 @@ const LoginPage = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   const navigate = useNavigate();
 
-  //redirect to landing page if logged in
+  //redirect to admin page if logged in
   useEffect(() => {
     if (user) {
-      navigate("/");
+      navigate("/admin");
     }
   }, [user]);
 
