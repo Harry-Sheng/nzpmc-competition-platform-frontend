@@ -24,24 +24,18 @@
   margin-left: 10px;
 }
 
-.navbar-links a{
-  display: flex;
-  align-items: center;
+.navbar-link {
+  background-color: #00c300;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 4px;
   text-decoration: none;
-  color: white;
-  margin: 0 10px;
+  display: inline-block;
+  transition: background-color 0.2s ease;
 }
 
-.navbar-button {
-  background-color: white;
-  color: #4CAF50;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-  font-size: 16px;
+.navbar-link {
+  background-color: #00c300;
 }
 
-.navbar-button:hover {
-  background-color: #45a049;
-  color: white;
-}
+

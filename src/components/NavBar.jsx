@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "../style/NavBar.css";
 import Logo from "../assets/nzpmcLogo.png";
 import { UserContext } from "../context/UserContext";
+import { Button } from "react-bootstrap";
 
 const NavBar = () => {
   const { user, setUser } = useContext(UserContext);
@@ -23,7 +24,9 @@ const NavBar = () => {
       <div className="navbar-links">
         {user ? (
           <>
-            <button onClick={handleLogout}>Logout</button>
+            <Button variant="danger" onClick={() => handleLogout()}>
+              Logout
+            </Button>
           </>
         ) : (
           <Link to="/login" className="navbar-link">
