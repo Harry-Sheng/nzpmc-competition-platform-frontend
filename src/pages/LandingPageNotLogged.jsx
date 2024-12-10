@@ -16,16 +16,18 @@ const LandingPageNotLogged = () => {
   }, []);
 
   return (
-    <div className="container">
+    <div>
       <Header
         title={"Welcome to NZPMC"}
         subtitle={"Portal for NZPMC event registration."}
       />
-      <Notification
-        message="You are not logged in. Click login to register for event"
-        variant="info"
-      />
-      <EventList events={events} />
+      <div className="container">
+        <Notification
+          message="You are not logged in. Click login to register for event"
+          variant="info"
+        />
+        <EventList events={events} />
+      </div>
     </div>
   );
 };

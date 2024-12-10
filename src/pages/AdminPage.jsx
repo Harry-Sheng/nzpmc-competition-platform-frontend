@@ -34,12 +34,14 @@ const AdminPage = () => {
   }, []);
 
   return (
-    <div className="container">
+    <div>
       <Header
         title={"Welcome Admin"}
         subtitle={"Here is the Admin Dashboard"}
       />
-      <AdminDashboard users={users}></AdminDashboard>
+      <div className="container">
+        <AdminDashboard users={users}></AdminDashboard>
+      </div>
     </div>
   );
 };

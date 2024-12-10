@@ -35,7 +35,7 @@ const SignUpPage = () => {
   };
 
   return (
-    <div className="container">
+    <div>
       <Header
         title={"Welcome to NZPMC Registration Page"}
         subtitle={
@@ -43,18 +43,20 @@ const SignUpPage = () => {
            to our exclusive competitions and workshops."
         }
       />
-      <Notification message={errorMessage} variant="danger" />
-      {user === null && (
-        <SignUpForm
-          email={email}
-          password={password}
-          name={name}
-          setEmail={setEmail}
-          setPassword={setPassword}
-          setName={setName}
-          handleSignUp={handleSignUp}
-        />
-      )}
+      <div className="container">
+        <Notification message={errorMessage} variant="danger" />
+        {user === null && (
+          <SignUpForm
+            email={email}
+            password={password}
+            name={name}
+            setEmail={setEmail}
+            setPassword={setPassword}
+            setName={setName}
+            handleSignUp={handleSignUp}
+          />
+        )}
+      </div>
     </div>
   );
 };

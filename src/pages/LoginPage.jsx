@@ -48,7 +48,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="container">
+    <div>
       <Header
         title={"Login to NZPMC Portal"}
         subtitle={
@@ -56,16 +56,18 @@ const LoginPage = () => {
           Use your registered email to sign in."
         }
       />
-      <Notification message={errorMessage} variant="danger" />
-      {user === null && (
-        <LoginForm
-          email={email}
-          password={password}
-          setEmail={setEmail}
-          setPassword={setPassword}
-          handleLogin={handleLogin}
-        />
-      )}
+      <div className="container">
+        <Notification message={errorMessage} variant="danger" />
+        {user === null && (
+          <LoginForm
+            email={email}
+            password={password}
+            setEmail={setEmail}
+            setPassword={setPassword}
+            handleLogin={handleLogin}
+          />
+        )}
+      </div>
     </div>
   );
 };

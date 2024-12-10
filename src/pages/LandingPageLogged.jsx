@@ -25,16 +25,18 @@ const LandingPageLogged = () => {
   }, []);
 
   return (
-    <div className="container">
+    <div>
       <Header
         title={"Welcome to NZPMC"}
         subtitle={"Portal for NZPMC event registration."}
       />
-      <EventListLogged
-        events={events}
-        userEvents={userEvents}
-        setUserEvents={setUserEvents}
-      />
+      <div className="container">
+        <EventListLogged
+          events={events}
+          userEvents={userEvents}
+          setUserEvents={setUserEvents}
+        />
+      </div>
     </div>
   );
 };

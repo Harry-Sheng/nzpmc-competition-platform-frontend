@@ -6,7 +6,7 @@ import LandingPageNotLogged from "./LandingPageNotLogged";
 const LandingPage = () => {
   const { user } = useContext(UserContext);
   return (
-    <div className="container">
+    <div>
       {user ? (
         <div>
           <LandingPageLogged />

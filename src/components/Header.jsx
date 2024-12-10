@@ -4,8 +4,10 @@ const Header = ({ title, subtitle }) => {
   return (
     <div>
       <NavBar />
-      <h1>{title}</h1>
-      <h4>{subtitle}</h4>
+      <div className="container">
+        <h1>{title}</h1>
+        <h4>{subtitle}</h4>
+      </div>
     </div>
   );
 };
