@@ -1,13 +1,13 @@
-import axios from "axios";
-const baseUrl = "/api/events";
+import axios from "axios"
+const baseUrl = "http://localhost:8080/api/events"
 
 const create = (newObject) => {
-  return axios.post(baseUrl, newObject);
-};
+  return axios.post(baseUrl, newObject)
+}
 
 const fetchEvents = () => {
-  return axios.get(baseUrl);
-};
+  return axios.get(baseUrl)
+}
 
 const joinEvent = async (eventId, token) => {
   const response = await axios.put(
@@ -18,13 +18,13 @@ const joinEvent = async (eventId, token) => {
         Authorization: `Bearer ${token}`,
       },
     }
-  );
-  console.log("Updated Event:", response.data);
-  return response.data;
-};
+  )
+  console.log("Updated Event:", response.data)
+  return response.data
+}
 
 export default {
   create,
   fetchEvents,
   joinEvent,
-};
+}

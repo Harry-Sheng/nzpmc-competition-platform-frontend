@@ -1,22 +1,23 @@
-import axios from "axios";
-const baseUrl = "/api/users";
+import axios from "axios"
+const baseUrl = "http://localhost:8080/api/users"
 
 const signUp = async (credentials) => {
-  const response = await axios.post(baseUrl, credentials);
-  return response.data;
-};
+  console.log(credentials)
+  const response = await axios.post(baseUrl, credentials)
+  return response.data
+}
 
 const create = (newObject) => {
-  return axios.post(baseUrl, newObject);
-};
+  return axios.post(baseUrl, newObject)
+}
 
 const getUsers = () => {
-  return axios.get(baseUrl);
-};
+  return axios.get(baseUrl)
+}
 
 const deleteEntries = (id) => {
-  return axios.delete(`${baseUrl}/${id}`);
-};
+  return axios.delete(`${baseUrl}/${id}`)
+}
 
 const fetchUserEvents = async (token) => {
   try {
@@ -24,16 +25,16 @@ const fetchUserEvents = async (token) => {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    });
-    console.log("User Events:", response.data);
-    return response.data;
+    })
+    console.log("User Events:", response.data)
+    return response.data
   } catch (error) {
     console.error(
       "Failed to fetch user events:",
       error.response?.data || error.message
-    );
+    )
   }
-};
+}
 
 const updateUserName = async (newName, token) => {
   const response = await axios.put(
@@ -44,10 +45,10 @@ const updateUserName = async (newName, token) => {
         Authorization: `Bearer ${token}`,
       },
     }
-  );
-  console.log("Updated User Name:", response.data);
-  return response.data;
-};
+  )
+  console.log("Updated User Name:", response.data)
+  return response.data
+}
 
 export default {
   signUp,
@@ -56,4 +57,4 @@ export default {
   fetchUserEvents,
   updateUserName,
   getUsers,
-};
+}
