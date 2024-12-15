@@ -1,36 +1,37 @@
-import { Card, Row, Col, Button, Modal, Form } from "react-bootstrap";
-import Exam from "../assets/exam.png";
-import { useState, useEffect, useContext } from "react";
-import { UserContext } from "../context/UserContext";
-import eventService from "../services/Events";
-import userService from "../services/User";
+import { Card, Row, Col, Button, Modal, Form } from "react-bootstrap"
+import Exam from "../assets/exam.png"
+import { useState, useEffect, useContext } from "react"
+import { UserContext } from "../context/UserContext"
+import eventService from "../services/Events"
+import userService from "../services/User"
 
 const EventListWithUserDetails = ({ events, userEvents, setUserEvents }) => {
-  const { user, setUser } = useContext(UserContext);
-  const [showModal, setShowModal] = useState(false);
-  const [newName, setNewName] = useState("");
+  const { user, setUser } = useContext(UserContext)
+  const [showModal, setShowModal] = useState(false)
+  const [newName, setNewName] = useState("")
 
   const isUserJoined = (eventId) => {
     if (!userEvents) {
-      return false;
+      return false
     }
-    return userEvents.some((userEvent) => userEvent._id === eventId);
-  };
+    return userEvents.some((userEvent) => userEvent.name === eventId)
+  }
 
   const handleJoin = async (eventId) => {
-    const updatedEvent = await eventService.joinEvent(eventId, user.token);
-    setUserEvents((prevUserEvents) => [...prevUserEvents, updatedEvent.event]);
-  };
+    console.log("Joining event with id:", events)
+    const updatedEvent = await eventService.joinEvent(eventId, user.token)
+    setUserEvents((prevUserEvents) => [...prevUserEvents, updatedEvent.event])
+  }
 
   const handleNameChange = async () => {
     try {
-      const updatedUser = await userService.updateUserName(newName, user.token);
-      setUser((prevUser) => ({ ...prevUser, name: updatedUser.name }));
-      setShowModal(false);
+      const updatedUser = await userService.updateUserName(newName, user.token)
+      setUser((prevUser) => ({ ...prevUser, name: updatedUser.name }))
+      setShowModal(false)
     } catch (error) {
-      console.error("Error updating name:", error);
+      console.error("Error updating name:", error)
     }
-  };
+  }
 
   return (
     <Row className="g-4">
@@ -53,14 +54,14 @@ const EventListWithUserDetails = ({ events, userEvents, setUserEvents }) => {
                 <p className="text-muted mb-0">{event.date}</p>
               </Col>
               <Col xs={3} className="ps-3">
-                {isUserJoined(event._id) ? (
+                {isUserJoined(event.name) ? (
                   <Button variant="outline-secondary" disabled>
                     Joined!
                   </Button>
                 ) : (
                   <Button
                     variant="primary"
-                    onClick={() => handleJoin(event._id)}
+                    onClick={() => handleJoin(event.name)}
                   >
                     Join
                   </Button>
@@ -115,7 +116,7 @@ const EventListWithUserDetails = ({ events, userEvents, setUserEvents }) => {
         </Modal.Footer>
       </Modal>
     </Row>
-  );
-};
+  )
+}
 
-export default EventListWithUserDetails;
+export default EventListWithUserDetails
