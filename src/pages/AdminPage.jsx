@@ -1,28 +1,13 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import Header from "../components/Header";
 import EventListLogged from "../components/EventListLogged";
-import { UserContext } from "../context/UserContext";
 import eventsService from "../services/Events";
 import userService from "../services/User";
 import AdminDashboard from "../components/Admin";
-import { useNavigate } from "react-router-dom";
 
 const AdminPage = () => {
   const [events, setEvents] = useState([]);
   const [users, setUsers] = useState([]);
-  const { user } = useContext(UserContext);
-  const navigate = useNavigate();
-
-  //redirect to landing page if user is not admin or/and not logged in
-  useEffect(() => {
-    console.log("User:", user);
-    if (user === null) {
-      return;
-    }
-    if (!user || user?.role !== "admin") {
-      navigate("/");
-    }
-  }, [user, navigate]);
 
   useEffect(() => {
     eventsService.fetchEvents().then((response) => {
