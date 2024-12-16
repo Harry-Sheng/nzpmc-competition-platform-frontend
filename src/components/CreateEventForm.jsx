@@ -37,7 +37,7 @@ const CreateEventForm = ({
       <Form.Group className="mb-3" controlId="eventDate">
         <Form.Label>Date</Form.Label>
         <Form.Control
-          type="text"
+          type="date"
           placeholder="Enter event date"
           value={date}
           onChange={({ target }) => setDate(target.value)}
