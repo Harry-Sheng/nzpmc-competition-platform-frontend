@@ -1,6 +1,6 @@
-import { Card, Row, Col, Button } from "react-bootstrap";
-import Exam from "../assets/exam.png";
-import { Link } from "react-router-dom";
+import { Card, Row, Col, Button } from "react-bootstrap"
+import Exam from "../assets/exam.png"
+import { Link } from "react-router-dom"
 
 const EventList = ({ events }) => {
   return (
@@ -24,7 +24,7 @@ const EventList = ({ events }) => {
         </Col>
       ))}
     </Row>
-  );
-};
+  )
+}
 
-export default EventList;
+export default EventList

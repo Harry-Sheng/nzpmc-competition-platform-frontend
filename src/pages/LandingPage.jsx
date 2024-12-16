@@ -1,10 +1,10 @@
-import { useContext } from "react";
-import { UserContext } from "../context/UserContext";
-import LandingPageLogged from "./LandingPageLogged";
-import LandingPageNotLogged from "./LandingPageNotLogged";
+import { useContext } from "react"
+import { UserContext } from "../context/UserContext"
+import LandingPageLogged from "./LandingPageLogged"
+import LandingPageNotLogged from "./LandingPageNotLogged"
 
 const LandingPage = () => {
-  const { user } = useContext(UserContext);
+  const { user } = useContext(UserContext)
   return (
     <div>
       {user ? (
@@ -17,7 +17,7 @@ const LandingPage = () => {
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default LandingPage;
+export default LandingPage

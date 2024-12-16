@@ -1,4 +1,4 @@
-import NavBar from "./NavBar";
+import NavBar from "./NavBar"
 
 const Header = ({ title, subtitle }) => {
   return (
@@ -9,7 +9,7 @@ const Header = ({ title, subtitle }) => {
         <h4>{subtitle}</h4>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

@@ -1,19 +1,19 @@
-import { useState, useEffect } from "react";
-import Header from "../components/Header";
-import Notification from "../components/Notification";
-import EventList from "../components/EventList";
-import eventsService from "../services/Events";
+import { useState, useEffect } from "react"
+import Header from "../components/Header"
+import Notification from "../components/Notification"
+import EventList from "../components/EventList"
+import eventsService from "../services/Events"
 
 const LandingPageNotLogged = () => {
-  const [events, setEvents] = useState([]);
+  const [events, setEvents] = useState([])
 
   useEffect(() => {
     eventsService.fetchEvents().then((response) => {
-      console.log("event promise fulfilled");
-      console.log(response.data);
-      setEvents(response.data);
-    });
-  }, []);
+      console.log("event promise fulfilled")
+      console.log(response.data)
+      setEvents(response.data)
+    })
+  }, [])
 
   return (
     <div>
@@ -29,7 +29,7 @@ const LandingPageNotLogged = () => {
         <EventList events={events} />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default LandingPageNotLogged;
+export default LandingPageNotLogged

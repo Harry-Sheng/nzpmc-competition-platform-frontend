@@ -1,10 +1,10 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import LandingPage from "./pages/LandingPage";
-import LoginPage from "./pages/LoginPage";
-import SignUpPage from "./pages/SignUpPage";
-import UserProvider from "./context/UserContext";
-import AdminPage from "./pages/AdminPage";
-import ProtectedRoute from "./Route/ProtectedRoute";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import LandingPage from "./pages/LandingPage"
+import LoginPage from "./pages/LoginPage"
+import SignUpPage from "./pages/SignUpPage"
+import UserProvider from "./context/UserContext"
+import AdminPage from "./pages/AdminPage"
+import ProtectedRoute from "./Route/ProtectedRoute"
 
 const App = () => {
   return (
@@ -23,7 +23,7 @@ const App = () => {
         </Routes>
       </Router>
     </UserProvider>
-  );
-};
+  )
+}
 
-export default App;
+export default App

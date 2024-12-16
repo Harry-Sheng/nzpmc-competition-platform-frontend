@@ -1,4 +1,4 @@
-import { Form, Button } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap"
 
 const SignUpForm = ({
   email,
@@ -47,7 +47,7 @@ const SignUpForm = ({
         SignUp
       </Button>
     </Form>
-  );
-};
+  )
+}
 
-export default SignUpForm;
+export default SignUpForm

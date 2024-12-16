@@ -1,5 +1,5 @@
-import { Form, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Form, Button } from "react-bootstrap"
+import { Link } from "react-router-dom"
 
 const LoginForm = ({ email, password, setEmail, setPassword, handleLogin }) => {
   return (
@@ -38,7 +38,7 @@ const LoginForm = ({ email, password, setEmail, setPassword, handleLogin }) => {
         </Button>
       </div>
     </Form>
-  );
-};
+  )
+}
 
-export default LoginForm;
+export default LoginForm

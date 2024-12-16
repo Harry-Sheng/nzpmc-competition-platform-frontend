@@ -1,4 +1,4 @@
-import { Form, Button } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap"
 
 const CreateEventForm = ({
   name,
@@ -47,7 +47,7 @@ const CreateEventForm = ({
         Create
       </Button>
     </Form>
-  );
-};
+  )
+}
 
-export default CreateEventForm;
+export default CreateEventForm

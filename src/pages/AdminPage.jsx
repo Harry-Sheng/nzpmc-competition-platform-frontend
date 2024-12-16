@@ -1,24 +1,24 @@
-import { useState, useEffect } from "react";
-import Header from "../components/Header";
-import EventListLogged from "../components/EventListLogged";
-import eventsService from "../services/Events";
-import userService from "../services/User";
-import AdminDashboard from "../components/Admin";
+import { useState, useEffect } from "react"
+import Header from "../components/Header"
+import EventListLogged from "../components/EventListLogged"
+import eventsService from "../services/Events"
+import userService from "../services/User"
+import AdminDashboard from "../components/Admin"
 
 const AdminPage = () => {
-  const [events, setEvents] = useState([]);
-  const [users, setUsers] = useState([]);
+  const [events, setEvents] = useState([])
+  const [users, setUsers] = useState([])
 
   useEffect(() => {
     eventsService.fetchEvents().then((response) => {
-      console.log("Events:", response.data);
-      setEvents(response.data);
-    });
+      console.log("Events:", response.data)
+      setEvents(response.data)
+    })
     userService.getUsers().then((response) => {
-      console.log("Users:", response.data);
-      setUsers(response.data);
-    });
-  }, []);
+      console.log("Users:", response.data)
+      setUsers(response.data)
+    })
+  }, [])
 
   return (
     <div>
@@ -30,7 +30,7 @@ const AdminPage = () => {
         <AdminDashboard users={users}></AdminDashboard>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default AdminPage;
+export default AdminPage

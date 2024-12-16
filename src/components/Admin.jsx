@@ -1,53 +1,53 @@
-import { Card, Row, Col, Button, Modal, Form } from "react-bootstrap";
-import Exam from "../assets/exam.png";
-import { useState, useEffect, useContext } from "react";
-import { UserContext } from "../context/UserContext";
-import eventService from "../services/Events";
-import Notification from "../components/Notification";
-import CreateEventForm from "../components/CreateEventForm";
+import { Card, Row, Col, Button, Modal, Form } from "react-bootstrap"
+import Exam from "../assets/exam.png"
+import { useState, useEffect, useContext } from "react"
+import { UserContext } from "../context/UserContext"
+import eventService from "../services/Events"
+import Notification from "../components/Notification"
+import CreateEventForm from "../components/CreateEventForm"
 
 const AdminDashboard = ({ users }) => {
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [date, setDate] = useState("");
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [events, setEvents] = useState([]);
+  const [name, setName] = useState("")
+  const [description, setDescription] = useState("")
+  const [date, setDate] = useState("")
+  const [errorMessage, setErrorMessage] = useState(null)
+  const [events, setEvents] = useState([])
 
   useEffect(() => {
-    fetchEvents();
-  }, []);
+    fetchEvents()
+  }, [])
 
   const fetchEvents = async () => {
     try {
-      const updatedEvents = await eventService.fetchEvents();
-      setEvents(updatedEvents.data);
+      const updatedEvents = await eventService.fetchEvents()
+      setEvents(updatedEvents.data)
       // This is very important it set the events immediately after fetching
-      console.log("Events after fetchEvents (not state):", updatedEvents.data);
+      console.log("Events after fetchEvents (not state):", updatedEvents.data)
     } catch (error) {
-      console.error("Failed to fetch events:", error);
+      console.error("Failed to fetch events:", error)
     }
-  };
+  }
 
   const handleCreateEvent = async (event) => {
-    event.preventDefault();
+    event.preventDefault()
     try {
       const createdEvent = await eventService.create({
         name,
         description,
         date,
-      });
-      setName("");
-      setDescription("");
-      setDate("");
-      await fetchEvents();
-      console.log("Events:", events);
+      })
+      setName("")
+      setDescription("")
+      setDate("")
+      await fetchEvents()
+      console.log("Events:", events)
     } catch (error) {
-      setErrorMessage("Event already exists");
+      setErrorMessage("Event already exists")
       setTimeout(() => {
-        setErrorMessage(null);
-      }, 5000);
+        setErrorMessage(null)
+      }, 5000)
     }
-  };
+  }
 
   return (
     <>
@@ -121,7 +121,7 @@ const AdminDashboard = ({ users }) => {
         </Col>
       </Row>
     </>
-  );
-};
+  )
+}
 
-export default AdminDashboard;
+export default AdminDashboard

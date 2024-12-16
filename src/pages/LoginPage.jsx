@@ -1,51 +1,51 @@
-import { useState, useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import Header from "../components/Header";
-import loginService from "../services/Login";
-import Notification from "../components/Notification";
-import LoginForm from "../components/LoginForm";
-import { UserContext } from "../context/UserContext";
+import { useState, useContext, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
+import Header from "../components/Header"
+import loginService from "../services/Login"
+import Notification from "../components/Notification"
+import LoginForm from "../components/LoginForm"
+import { UserContext } from "../context/UserContext"
 
 const LoginPage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const { user, setUser } = useContext(UserContext);
-  const [errorMessage, setErrorMessage] = useState(null);
-  const navigate = useNavigate();
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const { user, setUser } = useContext(UserContext)
+  const [errorMessage, setErrorMessage] = useState(null)
+  const navigate = useNavigate()
 
   //redirect to admin page if logged in
   useEffect(() => {
     if (user) {
-      navigate("/admin");
+      navigate("/admin")
     }
-  }, [user]);
+  }, [user])
 
   const handleLogin = async (event) => {
-    event.preventDefault();
+    event.preventDefault()
     try {
       const user = await loginService.login({
         email,
         password,
-      });
-      window.localStorage.setItem("loggedUser", JSON.stringify(user));
-      setUser(user);
-      setEmail("");
-      setPassword("");
+      })
+      window.localStorage.setItem("loggedUser", JSON.stringify(user))
+      setUser(user)
+      setEmail("")
+      setPassword("")
 
       setTimeout(
         () => {
-          window.localStorage.removeItem("loggedUser");
-          setUser(null);
+          window.localStorage.removeItem("loggedUser")
+          setUser(null)
         },
         1000 * 60 * 5
-      );
+      )
     } catch (exception) {
-      setErrorMessage("Wrong Email or Password");
+      setErrorMessage("Wrong Email or Password")
       setTimeout(() => {
-        setErrorMessage(null);
-      }, 5000);
+        setErrorMessage(null)
+      }, 5000)
     }
-  };
+  }
 
   return (
     <div>
@@ -69,7 +69,7 @@ const LoginPage = () => {
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default LoginPage;
+export default LoginPage
