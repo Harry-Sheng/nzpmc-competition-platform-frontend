@@ -8,7 +8,7 @@ const CreateEventForm = ({ fetchData }) => {
   const [description, setDescription] = useState("")
   const [date, setDate] = useState("")
   const [errorMessage, setErrorMessage] = useState(null)
-
+  const [successMessage, setSuccessMessage] = useState(null)
   const handleCreateEvent = async (event) => {
     event.preventDefault()
     try {
@@ -20,6 +20,12 @@ const CreateEventForm = ({ fetchData }) => {
       setName("")
       setDescription("")
       setDate("")
+
+      setSuccessMessage("Event created successfully")
+      setTimeout(() => {
+        setSuccessMessage(null)
+      }, 5000)
+
       await fetchData()
     } catch (error) {
       console.error("Failed to create event:", error)
@@ -32,13 +38,12 @@ const CreateEventForm = ({ fetchData }) => {
 
   return (
     <>
-      <Notification message={errorMessage} variant="danger" />
       <Form
         onSubmit={handleCreateEvent}
         className="p-4 border rounded shadow-sm bg-light"
         style={{ margin: "auto" }}
       >
-        <h2 className="text-center mb-4">Create Event</h2>
+        <h3 className="text-center mb-4">Create Event</h3>
         <Form.Group className="mb-3" controlId="eventName">
           <Form.Label>Name</Form.Label>
           <Form.Control
@@ -70,6 +75,8 @@ const CreateEventForm = ({ fetchData }) => {
           Create
         </Button>
       </Form>
+      <Notification message={errorMessage} variant="danger" />
+      <Notification message={successMessage} variant="success" />
     </>
   )
 }
