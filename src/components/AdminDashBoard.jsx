@@ -5,6 +5,7 @@ import { UserContext } from "../context/UserContext"
 import eventService from "../services/Events"
 import CreateEventForm from "./CreateEventForm"
 import competitionService from "../services/Competitions"
+import CreateCompetitionForm from "./CreateCompetitionForm"
 
 const AdminDashboard = ({ users }) => {
   const [events, setEvents] = useState([])
@@ -109,6 +110,8 @@ const AdminDashboard = ({ users }) => {
         <Col md={4}>
           {/* Create Event */}
           <CreateEventForm fetchData={fetchData} />
+          <br />
+          <CreateCompetitionForm fetchData={fetchData} />
         </Col>
       </Row>
     </>

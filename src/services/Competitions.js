@@ -5,6 +5,11 @@ const fetchCompetitions = () => {
   return axios.get(baseUrl)
 }
 
+const create = (newObject) => {
+  return axios.post(baseUrl, newObject)
+}
+
 export default {
   fetchCompetitions,
+  create,
 }
