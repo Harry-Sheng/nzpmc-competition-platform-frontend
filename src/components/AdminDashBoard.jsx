@@ -3,15 +3,10 @@ import Exam from "../assets/exam.png"
 import { useState, useEffect, useContext } from "react"
 import { UserContext } from "../context/UserContext"
 import eventService from "../services/Events"
-import Notification from "./Notification"
 import CreateEventForm from "./CreateEventForm"
 import competitionService from "../services/Competitions"
 
 const AdminDashboard = ({ users }) => {
-  const [name, setName] = useState("")
-  const [description, setDescription] = useState("")
-  const [date, setDate] = useState("")
-  const [errorMessage, setErrorMessage] = useState(null)
   const [events, setEvents] = useState([])
   const [competitions, setCompetitions] = useState([])
 
@@ -33,30 +28,8 @@ const AdminDashboard = ({ users }) => {
     }
   }
 
-  const handleCreateEvent = async (event) => {
-    event.preventDefault()
-    try {
-      const createdEvent = await eventService.create({
-        name,
-        description,
-        date,
-      })
-      setName("")
-      setDescription("")
-      setDate("")
-      await fetchData()
-      console.log("Events:", events)
-    } catch (error) {
-      setErrorMessage("Event already exists")
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
-    }
-  }
-
   return (
     <>
-      <Notification message={errorMessage} variant="danger" />
       <Row className="g-4">
         <Col md={8}>
           {/* Events Section */}
@@ -132,17 +105,10 @@ const AdminDashboard = ({ users }) => {
           ))}
         </Col>
 
-        {/* Create event Section */}
+        {/* Create Section */}
         <Col md={4}>
-          <CreateEventForm
-            name={name}
-            description={description}
-            date={date}
-            setName={setName}
-            setDescription={setDescription}
-            setDate={setDate}
-            handleCreateEvent={handleCreateEvent}
-          />
+          {/* Create Event */}
+          <CreateEventForm fetchData={fetchData} />
         </Col>
       </Row>
     </>
