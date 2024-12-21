@@ -3,8 +3,9 @@ import Exam from "../assets/exam.png"
 import { useState, useEffect, useContext } from "react"
 import { UserContext } from "../context/UserContext"
 import eventService from "../services/Events"
-import Notification from "../components/Notification"
-import CreateEventForm from "../components/CreateEventForm"
+import Notification from "./Notification"
+import CreateEventForm from "./CreateEventForm"
+import competitionService from "../services/Competitions"
 
 const AdminDashboard = ({ users }) => {
   const [name, setName] = useState("")
@@ -12,17 +13,21 @@ const AdminDashboard = ({ users }) => {
   const [date, setDate] = useState("")
   const [errorMessage, setErrorMessage] = useState(null)
   const [events, setEvents] = useState([])
+  const [competitions, setCompetitions] = useState([])
 
   useEffect(() => {
-    fetchEvents()
+    fetchData()
   }, [])
 
-  const fetchEvents = async () => {
+  const fetchData = async () => {
     try {
       const updatedEvents = await eventService.fetchEvents()
+      const updatedCompetitions = await competitionService.fetchCompetitions()
       setEvents(updatedEvents.data)
-      // This is very important it set the events immediately after fetching
-      console.log("Events after fetchEvents (not state):", updatedEvents.data)
+      setCompetitions(updatedCompetitions.data)
+      // This is very important it set the data immediately after fetching
+      console.log("Events after fetchData:", updatedEvents.data)
+      console.log("Competitions after fetchData :", updatedCompetitions.data)
     } catch (error) {
       console.error("Failed to fetch events:", error)
     }
@@ -39,7 +44,7 @@ const AdminDashboard = ({ users }) => {
       setName("")
       setDescription("")
       setDate("")
-      await fetchEvents()
+      await fetchData()
       console.log("Events:", events)
     } catch (error) {
       setErrorMessage("Event already exists")
@@ -71,6 +76,26 @@ const AdminDashboard = ({ users }) => {
                   <h5 className="mb-1">{event.name}</h5>
                   <p className="text-muted mb-1">{event.description}</p>
                   <p className="text-muted mb-0">{event.date}</p>
+                </Col>
+              </Card.Body>
+            </Card>
+          ))}
+
+          {/* Competition Section */}
+          <h2 className="mb-4"> Competitions</h2>
+          {competitions.map((competition, index) => (
+            <Card key={index} className="mb-3 shadow-sm rounded">
+              <Card.Body className="d-flex align-items-center">
+                <Col xs={3}>
+                  <img
+                    src={Exam}
+                    alt="Event"
+                    className="img-fluid rounded"
+                    style={{ maxHeight: "100px", objectFit: "cover" }}
+                  />
+                </Col>
+                <Col xs={7} className="ps-3">
+                  <h5 className="mb-1">{competition.title}</h5>
                 </Col>
               </Card.Body>
             </Card>

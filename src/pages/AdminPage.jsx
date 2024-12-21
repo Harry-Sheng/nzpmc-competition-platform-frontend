@@ -3,7 +3,7 @@ import Header from "../components/Header"
 import EventListLogged from "../components/EventListLogged"
 import eventsService from "../services/Events"
 import userService from "../services/User"
-import AdminDashboard from "../components/Admin"
+import AdminDashboard from "../components/AdminDashBoard"
 
 const AdminPage = () => {
   const [events, setEvents] = useState([])
