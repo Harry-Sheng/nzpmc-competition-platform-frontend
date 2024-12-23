@@ -5,6 +5,7 @@ import SignUpPage from "./pages/SignUpPage"
 import UserProvider from "./context/UserContext"
 import AdminPage from "./pages/AdminPage"
 import ProtectedRoute from "./Route/ProtectedRoute"
+import AddQuestionPage from "./pages/AddQuestionPage"
 
 const App = () => {
   return (
@@ -18,6 +19,15 @@ const App = () => {
             path="/admin"
             element={
               <ProtectedRoute element={<AdminPage />} roleRequired="admin" />
+            }
+          />
+          <Route
+            path="/addquestion/:competitionId"
+            element={
+              <ProtectedRoute
+                element={<AddQuestionPage />}
+                roleRequired="admin"
+              />
             }
           />
         </Routes>
