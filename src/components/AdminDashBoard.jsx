@@ -6,6 +6,7 @@ import eventService from "../services/Events"
 import CreateEventForm from "./CreateEventForm"
 import competitionService from "../services/Competitions"
 import CreateCompetitionForm from "./CreateCompetitionForm"
+import { Link } from "react-router-dom"
 
 const AdminDashboard = ({ users }) => {
   const [events, setEvents] = useState([])
@@ -70,6 +71,12 @@ const AdminDashboard = ({ users }) => {
                 </Col>
                 <Col xs={7} className="ps-3">
                   <h5 className="mb-1">{competition.title}</h5>
+                </Col>
+                <Col xs={2} className="d-flex justify-content-end">
+                  {/* Add Question Button */}
+                  <Link to={`/addquestion/${competition.title}`}>
+                    <Button variant="primary">Add Question</Button>
+                  </Link>
                 </Col>
               </Card.Body>
             </Card>
