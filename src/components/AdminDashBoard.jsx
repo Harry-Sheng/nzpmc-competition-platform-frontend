@@ -1,4 +1,11 @@
-import { Card, Row, Col, Button, Modal, Form } from "react-bootstrap"
+import {
+  Card,
+  Row,
+  Col,
+  Button,
+  Dropdown,
+  DropdownButton,
+} from "react-bootstrap"
 import Exam from "../assets/exam.png"
 import { useState, useEffect, useContext } from "react"
 import { UserContext } from "../context/UserContext"
@@ -30,6 +37,17 @@ const AdminDashboard = ({ users }) => {
     }
   }
 
+  const handleCompetitionSelect = (competitionTitle, eventName) => {
+    eventService.linkCompetitionToEvent(eventName, competitionTitle)
+    setEvents((prevEvents) =>
+      prevEvents.map((event) =>
+        event.name === eventName
+          ? { ...event, competitionId: competitionTitle }
+          : event
+      )
+    )
+  }
+
   return (
     <>
       <Row className="g-4">
@@ -51,6 +69,29 @@ const AdminDashboard = ({ users }) => {
                   <h5 className="mb-1">{event.name}</h5>
                   <p className="text-muted mb-1">{event.description}</p>
                   <p className="text-muted mb-0">{event.date}</p>
+                </Col>
+                <Col xs={2} className="d-flex justify-content-end">
+                  {/* Dropdown to Link Competition */}
+                  <DropdownButton
+                    title={event.competitionId ? event.competitionId : "None"}
+                    variant="primary"
+                    onSelect={(competitionTitle) =>
+                      handleCompetitionSelect(
+                        competitionTitle === "None" ? null : competitionTitle,
+                        event.name
+                      )
+                    }
+                  >
+                    <Dropdown.Item eventKey="None">None</Dropdown.Item>
+                    {competitions.map((competition) => (
+                      <Dropdown.Item
+                        key={competition.title}
+                        eventKey={competition.title}
+                      >
+                        {competition.title}
+                      </Dropdown.Item>
+                    ))}
+                  </DropdownButton>
                 </Col>
               </Card.Body>
             </Card>

@@ -23,8 +23,16 @@ const joinEvent = async (eventId, token) => {
   return response.data
 }
 
+const linkCompetitionToEvent = async (eventId, competitionTitle) => {
+  const response = await axios.put(`${baseUrl}/${eventId}/competition`, {
+    title: competitionTitle,
+  })
+  return response.data
+}
+
 export default {
   create,
   fetchEvents,
   joinEvent,
+  linkCompetitionToEvent,
 }
