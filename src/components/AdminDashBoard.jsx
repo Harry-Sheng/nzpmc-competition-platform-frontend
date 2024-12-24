@@ -5,6 +5,7 @@ import {
   Button,
   Dropdown,
   DropdownButton,
+  Modal,
 } from "react-bootstrap"
 import Exam from "../assets/exam.png"
 import { useState, useEffect, useContext } from "react"
@@ -12,12 +13,18 @@ import { UserContext } from "../context/UserContext"
 import eventService from "../services/Events"
 import CreateEventForm from "./CreateEventForm"
 import competitionService from "../services/Competitions"
+import attemptService from "../services/Attempts"
 import CreateCompetitionForm from "./CreateCompetitionForm"
 import { Link } from "react-router-dom"
+import ResultModal from "./ResultModal"
 
+// To do: Refactor AdminDashboard components
 const AdminDashboard = ({ users }) => {
   const [events, setEvents] = useState([])
   const [competitions, setCompetitions] = useState([])
+  const [showResultModal, setShowResultModal] = useState(false)
+  const [selectedEvent, setSelectedEvent] = useState(null)
+  const [results, setResults] = useState(null)
 
   useEffect(() => {
     fetchData()
@@ -48,6 +55,41 @@ const AdminDashboard = ({ users }) => {
     )
   }
 
+  const generateResult = async (event) => {
+    if (!event.competitionId) {
+      console.log("No competition linked to generate results!")
+      return
+    }
+
+    const competition = competitions.find(
+      (comp) => comp.title === event.competitionId
+    )
+
+    if (competition) {
+      try {
+        const result = await attemptService.generateResults(competition.title)
+        setResults(result.data)
+        if (result.data.length === 0) {
+          setResults(null)
+        }
+        setSelectedEvent(event)
+        setShowResultModal(true)
+        console.log("Results generated successfully:", result.data)
+      } catch (error) {
+        console.error("Error generating results:", error)
+        alert("An error occurred while generating results. Please try again.")
+      }
+    } else {
+      alert("Competition not found. Unable to generate results.")
+    }
+  }
+
+  const closeResultModal = () => {
+    setShowResultModal(false)
+    setResults(null)
+    setSelectedEvent(null)
+  }
+
   return (
     <>
       <Row className="g-4">
@@ -65,16 +107,17 @@ const AdminDashboard = ({ users }) => {
                     style={{ maxHeight: "100px", objectFit: "cover" }}
                   />
                 </Col>
-                <Col xs={7} className="ps-3">
+                <Col xs={6} className="ps-3">
                   <h5 className="mb-1">{event.name}</h5>
                   <p className="text-muted mb-1">{event.description}</p>
                   <p className="text-muted mb-0">{event.date}</p>
                 </Col>
-                <Col xs={2} className="d-flex justify-content-end">
+                <Col xs={2} className="d-flex flex-column justify-content-end">
                   {/* Dropdown to Link Competition */}
                   <DropdownButton
                     title={event.competitionId ? event.competitionId : "None"}
                     variant="primary"
+                    className="mb-2"
                     onSelect={(competitionTitle) =>
                       handleCompetitionSelect(
                         competitionTitle === "None" ? null : competitionTitle,
@@ -92,10 +135,25 @@ const AdminDashboard = ({ users }) => {
                       </Dropdown.Item>
                     ))}
                   </DropdownButton>
+                  {/* Generate Result Button */}
+                  <Button
+                    variant="success"
+                    onClick={() => generateResult(event)}
+                    disabled={!event.competitionId} // Disable if no competition linked
+                  >
+                    Result
+                  </Button>
                 </Col>
               </Card.Body>
             </Card>
           ))}
+
+          <ResultModal
+            show={showResultModal}
+            results={results}
+            selectedEvent={selectedEvent}
+            onClose={closeResultModal}
+          />
 
           {/* Competition Section */}
           <h2 className="mb-4"> Competitions</h2>
@@ -110,7 +168,7 @@ const AdminDashboard = ({ users }) => {
                     style={{ maxHeight: "100px", objectFit: "cover" }}
                   />
                 </Col>
-                <Col xs={7} className="ps-3">
+                <Col xs={6} className="ps-3">
                   <h5 className="mb-1">{competition.title}</h5>
                 </Col>
                 <Col xs={2} className="d-flex justify-content-end">
