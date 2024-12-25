@@ -4,11 +4,13 @@ import { useState, useEffect, useContext } from "react"
 import { UserContext } from "../context/UserContext"
 import eventService from "../services/Events"
 import userService from "../services/User"
+import { useNavigate } from "react-router-dom"
 
 const EventListWithUserDetails = ({ events, userEvents, setUserEvents }) => {
   const { user, setUser } = useContext(UserContext)
   const [showModal, setShowModal] = useState(false)
   const [newName, setNewName] = useState("")
+  const navigate = useNavigate()
 
   const isUserJoined = (eventId) => {
     if (!userEvents) {
@@ -17,8 +19,19 @@ const EventListWithUserDetails = ({ events, userEvents, setUserEvents }) => {
     return userEvents.some((userEvent) => userEvent.name === eventId)
   }
 
+  const isCompetitionLinked = (event) => {
+    if (!event) {
+      return false
+    }
+    return event.competitionId !== null
+  }
+
+  const handleJoinCompetition = (competitionId) => {
+    navigate(`/competition/${competitionId}`)
+  }
+
   const handleJoin = async (eventId) => {
-    console.log("Joining event with id:", events)
+    console.log("Joining event with id:", eventId)
     const updatedEvent = await eventService.joinEvent(eventId, user.token)
     setUserEvents((prevUserEvents) => [...prevUserEvents, updatedEvent.event])
   }
@@ -48,17 +61,39 @@ const EventListWithUserDetails = ({ events, userEvents, setUserEvents }) => {
                   style={{ maxHeight: "100px", objectFit: "cover" }}
                 />
               </Col>
-              <Col xs={7} className="ps-3">
+              <Col xs={6} className="ps-3">
                 <h5 className="mb-1">{event.name}</h5>
                 <p className="text-muted mb-1">{event.description}</p>
                 <p className="text-muted mb-0">{event.date}</p>
               </Col>
-              <Col xs={3} className="ps-3">
+              <Col xs={2.1} className="d-flex flex-column justify-content-end">
                 {isUserJoined(event.name) ? (
-                  <Button variant="outline-secondary" disabled>
-                    Joined!
-                  </Button>
+                  //* If user has joined the event */
+                  <>
+                    <Button
+                      variant="outline-secondary"
+                      className="mb-2"
+                      disabled
+                    >
+                      Joined!
+                    </Button>
+                    {isCompetitionLinked(event) ? (
+                      <Button
+                        variant="success"
+                        onClick={() =>
+                          handleJoinCompetition(event.competitionId)
+                        }
+                      >
+                        Compete!
+                      </Button>
+                    ) : (
+                      <Button variant="secondary" className="mb-2" disabled>
+                        No Competition
+                      </Button>
+                    )}
+                  </>
                 ) : (
+                  //* If user have not joined the event */
                   <Button
                     variant="primary"
                     onClick={() => handleJoin(event.name)}

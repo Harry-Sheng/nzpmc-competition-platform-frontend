@@ -6,6 +6,7 @@ import UserProvider from "./context/UserContext"
 import AdminPage from "./pages/AdminPage"
 import ProtectedRoute from "./Route/ProtectedRoute"
 import AddQuestionPage from "./pages/AddQuestionPage"
+import CompetitionPage from "./pages/CompetitionPage"
 
 const App = () => {
   return (
@@ -29,6 +30,10 @@ const App = () => {
                 roleRequired="admin"
               />
             }
+          />
+          <Route
+            path="/competition/:competitionId"
+            element={<CompetitionPage />}
           />
         </Routes>
       </Router>
