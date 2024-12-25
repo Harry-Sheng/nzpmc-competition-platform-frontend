@@ -37,7 +37,7 @@ const LoginPage = () => {
           window.localStorage.removeItem("loggedUser")
           setUser(null)
         },
-        1000 * 60 * 5
+        1000 * 60 * 60 * 24 // 1 day in milliseconds
       )
     } catch (exception) {
       setErrorMessage("Wrong Email or Password")
