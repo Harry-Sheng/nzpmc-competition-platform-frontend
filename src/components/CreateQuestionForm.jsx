@@ -81,12 +81,12 @@ const AddQuestionForm = ({ competitionId, handleQuestionUpdate }) => {
         ))}
 
         <Form.Group className="mb-3" controlId="correctChoice">
-          <Form.Label>Correct Choice (1-4)</Form.Label>
+          <Form.Label>Correct Choice (0-3)</Form.Label>
           <Form.Control
             type="number"
-            min="1"
-            max="4"
-            placeholder="Enter correct choice (1-4)"
+            min="0"
+            max="3"
+            placeholder="Enter correct choice (0-3)"
             value={correctChoice}
             onChange={({ target }) => setCorrectChoice(target.value)}
           />
