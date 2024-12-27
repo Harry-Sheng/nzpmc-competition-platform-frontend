@@ -1,3 +1,6 @@
+import { CompetitionEndCard } from "./../components/CompetitionEndCard"
+import { CompetitionQuestionCard } from "./../components/CompetitionQuestionCard"
+import { CompetitionSideBar } from "./../components/CompetitionSideBar"
 import { useState, useEffect, useContext } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { UserContext } from "../context/UserContext"
@@ -98,24 +101,13 @@ const CompetitionPage = () => {
     return (
       <div className="min-vh-100 py-4 bg-light d-flex align-items-center">
         <Container>
-          <Card className="text-center">
-            <Card.Body>
-              <Card.Title as="h2" className="mb-4">
-                Congratulations! You have completed {competitionId}!
-              </Card.Title>
-              <Card.Text className="fs-5 mb-4">
-                Time taken: {formatTime(timeElapsed)}
-              </Card.Text>
-              <ProgressBar now={progress} className="mb-4" />
-              <Button
-                variant="primary"
-                onClick={redirectToHomePage}
-                className="mt-3"
-              >
-                Home Page
-              </Button>
-            </Card.Body>
-          </Card>
+          <CompetitionEndCard
+            competitionId={competitionId}
+            formatTime={formatTime}
+            timeElapsed={timeElapsed}
+            progress={progress}
+            redirectToHomePage={redirectToHomePage}
+          />
         </Container>
       </div>
     )
@@ -129,102 +121,27 @@ const CompetitionPage = () => {
           <Row className="g-4">
             {/* Sidebar */}
             <Col md={3}>
-              <Card>
-                <Card.Body>
-                  <h5>Time: {formatTime(timeElapsed)}</h5>
-                  <ProgressBar
-                    now={progress}
-                    variant="success"
-                    className="mb-3"
-                  />
-                  <div className="d-grid gap-2">
-                    {questions.map((question, index) => (
-                      <Button
-                        key={index}
-                        variant={
-                          currentQuestion === index
-                            ? "primary"
-                            : "outline-primary"
-                        }
-                        className="text-start position-relative"
-                        onClick={() => handleQuestionSelect(index)}
-                      >
-                        Question {index + 1}
-                        {selectedAnswers.get(questions[index].title) !== -1 && (
-                          <span className="position-absolute top-50 end-0 translate-middle-y me-2 text-success">
-                            ✓
-                          </span>
-                        )}
-                      </Button>
-                    ))}
-                    <Button
-                      variant="success"
-                      className="mt-3"
-                      onClick={handleSubmit}
-                    >
-                      Submit
-                    </Button>
-                  </div>
-                </Card.Body>
-              </Card>
+              <CompetitionSideBar
+                formatTime={formatTime}
+                timeElapsed={timeElapsed}
+                progress={progress}
+                currentQuestion={currentQuestion}
+                handleQuestionSelect={handleQuestionSelect}
+                handleSubmit={handleSubmit}
+                questions={questions}
+                selectedAnswers={selectedAnswers}
+              />
             </Col>
 
             {/* Question */}
             <Col md={9}>
-              <Card className="mb-4">
-                <Card.Body>
-                  <Card.Title as="h2" className="mb-4">
-                    Question {currentQuestion + 1} of {questions.length}
-                  </Card.Title>
-                  <Card.Text className="fs-5">
-                    {questions[currentQuestion].title}
-                  </Card.Text>
-                </Card.Body>
-              </Card>
-              <Row className="g-4 mb-4">
-                {questions[currentQuestion].options.map((option, index) => (
-                  <Col sm={6} key={index}>
-                    <Button
-                      variant={
-                        selectedAnswers.get(
-                          questions[currentQuestion].title
-                        ) === index
-                          ? "primary"
-                          : "outline-primary"
-                      }
-                      className={`w-100 py-4 d-flex align-items-center justify-content-center`}
-                      onClick={() => handleOptionSelect(index)}
-                    >
-                      <span className="me-2">
-                        {String.fromCharCode(65 + index)}.
-                      </span>{" "}
-                      {option}
-                    </Button>
-                  </Col>
-                ))}
-              </Row>
-              <div className="d-flex justify-content-between">
-                <Button
-                  variant="primary"
-                  onClick={() =>
-                    handleQuestionSelect(Math.max(0, currentQuestion - 1))
-                  }
-                  disabled={currentQuestion === 0}
-                >
-                  Previous
-                </Button>
-                <Button
-                  variant="primary"
-                  onClick={() =>
-                    handleQuestionSelect(
-                      Math.min(questions.length - 1, currentQuestion + 1)
-                    )
-                  }
-                  disabled={currentQuestion === questions.length - 1}
-                >
-                  Next
-                </Button>
-              </div>
+              <CompetitionQuestionCard
+                currentQuestion={currentQuestion}
+                handleOptionSelect={handleOptionSelect}
+                handleQuestionSelect={handleQuestionSelect}
+                questions={questions}
+                selectedAnswers={selectedAnswers}
+              />
             </Col>
           </Row>
         </Container>
