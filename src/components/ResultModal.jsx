@@ -1,5 +1,5 @@
 import React from "react"
-import { Modal, Button } from "react-bootstrap"
+import { Modal, Button, Row, Col } from "react-bootstrap"
 
 const ResultModal = ({ show, results, selectedEvent, onClose }) => (
   <Modal show={show} onHide={onClose}>
@@ -8,14 +8,22 @@ const ResultModal = ({ show, results, selectedEvent, onClose }) => (
     </Modal.Header>
     <Modal.Body>
       {results ? (
-        <ul>
+        <>
+          <Row>
+            <Col>
+              <h5>Email</h5>
+            </Col>
+            <Col>
+              <h5>Result</h5>
+            </Col>
+          </Row>
           {results.map((result, index) => (
-            <li key={index}>
-              <strong>Email:</strong> {result.email} <br />
-              <strong>Result:</strong> {result.result}
-            </li>
+            <Row key={index}>
+              <Col>{result.email}</Col>
+              <Col>{result.result}</Col>
+            </Row>
           ))}
-        </ul>
+        </>
       ) : (
         <p>No results available.</p>
       )}
