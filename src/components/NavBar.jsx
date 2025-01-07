@@ -4,10 +4,11 @@ import "../style/NavBar.css"
 import Logo from "../assets/nzpmcLogo.png"
 import { UserContext } from "../context/UserContext"
 import { Button } from "react-bootstrap"
+import { useNavigate } from "react-router-dom"
 
 const NavBar = () => {
   const { user, setUser } = useContext(UserContext)
-
+  const navigate = useNavigate()
   const handleLogout = () => {
     setUser(null)
     window.localStorage.removeItem("loggedUser")
@@ -24,6 +25,16 @@ const NavBar = () => {
       <div className="navbar-links">
         {user ? (
           <>
+            {user.role === "admin" && (
+              <Button
+                variant="primary"
+                onClick={() => navigate("/admin")}
+                className="admin-button"
+              >
+                Dashboard
+              </Button>
+            )}
+            <span style={{ margin: "0 5px" }}></span>
             <Button variant="danger" onClick={() => handleLogout()}>
               Logout
             </Button>
