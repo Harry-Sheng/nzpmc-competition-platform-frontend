@@ -1,5 +1,6 @@
 import { Card, Col } from "react-bootstrap"
 import Exam from "../assets/exam.png"
+import "../style/styles.css"
 
 const QuestionList = ({ questions }) => {
   return (
@@ -9,7 +10,7 @@ const QuestionList = ({ questions }) => {
         <Card.Header>
           <h4 className="mb-0">Question Pool</h4>
         </Card.Header>
-        <Card.Body>
+        <Card.Body className="scrollable">
           {questions.length > 0 ? (
             questions.map((question, index) => (
               <Card key={index} className="mb-3 shadow-sm rounded ">
