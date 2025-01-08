@@ -1,14 +1,31 @@
 import { Card, Col } from "react-bootstrap"
 import Exam from "../assets/exam.png"
 import "../style/styles.css"
+import questionService from "../services/Questions"
+import { useEffect, useState } from "react"
 
-const QuestionList = ({ questions }) => {
+const QuestionPoll = () => {
+  const [questions, setQuestions] = useState([])
+
+  useEffect(() => {
+    const fetchQuestions = async () => {
+      try {
+        const response = await questionService.getQuestions()
+        setQuestions(response.data)
+        console.log("Questions fetched:", response.data)
+      } catch (error) {
+        console.error("Failed to fetch questions:", error)
+      }
+    }
+    fetchQuestions()
+  }, [])
+
   return (
     <>
       {/* Question List Section */}
       <Card className="mb-3 shadow-sm rounded">
         <Card.Header>
-          <h4 className="mb-0">Question List</h4>
+          <h4 className="mb-0">Question Poll</h4>
         </Card.Header>
         <Card.Body className="scrollable">
           {questions.length > 0 ? (
@@ -48,4 +65,4 @@ const QuestionList = ({ questions }) => {
   )
 }
 
-export default QuestionList
+export default QuestionPoll

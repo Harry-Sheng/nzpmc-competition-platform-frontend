@@ -5,6 +5,7 @@ import { Row, Col } from "react-bootstrap"
 import { useEffect, useState } from "react"
 import competitionService from "../services/Competitions"
 import AddQuestionForm from "../components/CreateQuestionForm"
+import QuestionPoll from "../components/QuestionPoll"
 
 const AddQuestionPage = () => {
   const { competitionId } = useParams()
@@ -37,7 +38,9 @@ const AddQuestionPage = () => {
       />
       <div className="container">
         <Row className="g-4">
-          <QuestionList questions={questions} />
+          <Col md={8}>
+            <QuestionList questions={questions} />
+          </Col>
           {/* Create Section */}
           <Col md={4}>
             <AddQuestionForm
@@ -45,6 +48,7 @@ const AddQuestionPage = () => {
               competitionId={competitionId}
             ></AddQuestionForm>
           </Col>
+          <QuestionPoll questions={questions} />
         </Row>
       </div>
     </div>
