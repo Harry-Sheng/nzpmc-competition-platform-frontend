@@ -2,8 +2,9 @@ import { Form, Button } from "react-bootstrap"
 import { useState } from "react"
 import Notification from "./Notification"
 import competitionService from "../services/Competitions"
+import questionService from "../services/Questions"
 
-const AddQuestionForm = ({ competitionId, handleQuestionUpdate }) => {
+const CreateQuestionForm = ({ competitionId, handleQuestionUpdate }) => {
   const [title, setTitle] = useState("")
   const [options, setOptions] = useState(["", "", "", ""])
   const [correctChoice, setCorrectChoice] = useState("")
@@ -25,10 +26,7 @@ const AddQuestionForm = ({ competitionId, handleQuestionUpdate }) => {
         correctChoiceIndex: parseInt(correctChoice),
       }
 
-      await competitionService.addQuestionToCompetition(
-        competitionId,
-        newQuestion
-      )
+      await questionService.createQuestion(newQuestion)
       handleQuestionUpdate(newQuestion)
 
       setTitle("")
@@ -57,7 +55,7 @@ const AddQuestionForm = ({ competitionId, handleQuestionUpdate }) => {
         className="p-4 border rounded shadow-sm bg-light"
         style={{ margin: "auto" }}
       >
-        <h3 className="text-center mb-4">Add Question</h3>
+        <h3 className="text-center mb-4">Create Question</h3>
         <Form.Group className="mb-3" controlId="questionTitle">
           <Form.Label>Question Title</Form.Label>
           <Form.Control
@@ -104,4 +102,4 @@ const AddQuestionForm = ({ competitionId, handleQuestionUpdate }) => {
   )
 }
 
-export default AddQuestionForm
+export default CreateQuestionForm

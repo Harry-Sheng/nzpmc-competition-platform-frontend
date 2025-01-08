@@ -10,6 +10,21 @@ const getQuestions = () => {
   })
 }
 
+const createQuestion = (newQuestion) => {
+  const user = JSON.parse(localStorage.getItem("loggedUser"))
+  console.log("Creating question", newQuestion)
+  return axios.post(
+    `${baseUrl}`,
+    { ...newQuestion },
+    {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    }
+  )
+}
+
 export default {
   getQuestions,
+  createQuestion,
 }

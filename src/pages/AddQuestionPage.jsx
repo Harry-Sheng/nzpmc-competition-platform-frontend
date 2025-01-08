@@ -4,18 +4,25 @@ import QuestionList from "../components/QuestionList"
 import { Row, Col } from "react-bootstrap"
 import { useEffect, useState } from "react"
 import competitionService from "../services/Competitions"
-import AddQuestionForm from "../components/CreateQuestionForm"
+import CreateQuestionForm from "../components/CreateQuestionForm"
 import QuestionPoll from "../components/QuestionPoll"
+import questionService from "../services/Questions"
 
 const AddQuestionPage = () => {
   const { competitionId } = useParams()
-  const [questions, setQuestions] = useState([])
+  const [questionList, setQuestionList] = useState([]) //Competition questions
+  const [questionPoll, setQuestionPoll] = useState([]) //All questions
 
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const response = await competitionService.fetchQuestions(competitionId)
-        setQuestions(response.data)
+        const questionListResponse =
+          await competitionService.fetchQuestions(competitionId)
+        setQuestionList(questionListResponse.data)
+
+        const questionPollResponse = await questionService.getQuestions()
+        setQuestionPoll(questionPollResponse.data)
+
         console.log("Questions fetched:", response.data)
       } catch (error) {
         console.error("Failed to fetch questions:", error)
@@ -24,8 +31,12 @@ const AddQuestionPage = () => {
     fetchQuestions()
   }, [])
 
-  const handleQuestionUpdate = (newQuestion) => {
-    setQuestions([...questions, newQuestion])
+  const handleQuestionListUpdate = (newQuestion) => {
+    setQuestionList([...questionList, newQuestion])
+  }
+
+  const handleQuestionPollUpdate = (newQuestion) => {
+    setQuestionPoll([...questionPoll, newQuestion])
   }
 
   return (
@@ -39,16 +50,20 @@ const AddQuestionPage = () => {
       <div className="container">
         <Row className="g-4">
           <Col md={8}>
-            <QuestionList questions={questions} />
+            <QuestionList questions={questionList} />
           </Col>
           {/* Create Section */}
           <Col md={4}>
-            <AddQuestionForm
-              handleQuestionUpdate={handleQuestionUpdate}
+            <CreateQuestionForm
+              handleQuestionUpdate={handleQuestionPollUpdate}
               competitionId={competitionId}
-            ></AddQuestionForm>
+            ></CreateQuestionForm>
           </Col>
-          <QuestionPoll questions={questions} />
+          <QuestionPoll
+            competitionId={competitionId}
+            questions={questionPoll}
+            handleQuestionUpdate={handleQuestionListUpdate}
+          />
         </Row>
       </div>
     </div>

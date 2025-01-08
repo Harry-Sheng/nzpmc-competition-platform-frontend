@@ -1,27 +1,31 @@
-import { Card, Col } from "react-bootstrap"
+import { Card, Col, Button } from "react-bootstrap"
 import Exam from "../assets/exam.png"
 import "../style/styles.css"
-import questionService from "../services/Questions"
-import { useEffect, useState } from "react"
+import competitionService from "../services/Competitions"
+import { useState } from "react"
+import Notification from "./Notification"
 
-const QuestionPoll = () => {
-  const [questions, setQuestions] = useState([])
+const QuestionPoll = ({ questions, competitionId, handleQuestionUpdate }) => {
+  const [errorMessage, setErrorMessage] = useState(null)
+  const [successMessage, setSuccessMessage] = useState(null)
 
-  useEffect(() => {
-    const fetchQuestions = async () => {
-      try {
-        const response = await questionService.getQuestions()
-        setQuestions(response.data)
-        console.log("Questions fetched:", response.data)
-      } catch (error) {
-        console.error("Failed to fetch questions:", error)
-      }
+  const addToCompetition = async (question) => {
+    try {
+      await competitionService.addQuestionToCompetition(competitionId, question)
+      handleQuestionUpdate(question)
+      setSuccessMessage("Question created successfully!")
+      setTimeout(() => setSuccessMessage(null), 5000)
+    } catch (error) {
+      console.error("Failed to add question:", error)
+      setErrorMessage("Failed to add question. Please try again.")
+      setTimeout(() => setErrorMessage(null), 5000)
     }
-    fetchQuestions()
-  }, [])
-
+  }
   return (
     <>
+      {/* Notifications */}
+      <Notification message={errorMessage} variant="danger" />
+      <Notification message={successMessage} variant="success" />
       {/* Question List Section */}
       <Card className="mb-3 shadow-sm rounded">
         <Card.Header>
@@ -52,6 +56,14 @@ const QuestionPoll = () => {
                     <p className="text-muted mb-0">
                       Correct Answer: Option {question.correctChoiceIndex}
                     </p>
+                  </Col>
+                  <Col xs={2} className="d-flex justify-content-end">
+                    <Button
+                      variant="success"
+                      onClick={() => addToCompetition(question)}
+                    >
+                      Add to competition
+                    </Button>
                   </Col>
                 </Card.Body>
               </Card>
