@@ -59,6 +59,22 @@ const QuestionPoll = ({ questions, competitionId, handleQuestionUpdate }) => {
                     <p className="text-muted mb-0">
                       Correct Answer: Option {question.correctChoiceIndex}
                     </p>
+                    <p className="text-muted mb-1">
+                      <strong>Difficulty:</strong>{" "}
+                      {question.difficulty !== null ? (
+                        question.difficulty
+                      ) : (
+                        <>"N/A"</>
+                      )}
+                    </p>
+                    <p className="text-muted mb-0">
+                      <strong>Topics:</strong>{" "}
+                      {question.topics !== null ? (
+                        question.topics.join(", ")
+                      ) : (
+                        <>"N/A"</>
+                      )}
+                    </p>
                   </Col>
                   <Col xs={2} className="d-flex justify-content-end">
                     <Button
