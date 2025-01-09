@@ -13,8 +13,11 @@ const fetchQuestions = (competitionId) => {
   return axios.get(`${baseUrl}/${competitionId}/questions`)
 }
 
-const addQuestionToCompetition = (competitionId, newQuestion) => {
-  return axios.post(`${baseUrl}/${competitionId}/questions`, newQuestion)
+const addQuestionToCompetition = (competitionId, questionTitle) => {
+  console.log(questionTitle)
+  return axios.post(`${baseUrl}/${competitionId}/questions`, {
+    title: questionTitle,
+  })
 }
 
 export default {

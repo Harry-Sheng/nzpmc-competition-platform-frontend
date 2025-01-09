@@ -11,7 +11,10 @@ const QuestionPoll = ({ questions, competitionId, handleQuestionUpdate }) => {
 
   const addToCompetition = async (question) => {
     try {
-      await competitionService.addQuestionToCompetition(competitionId, question)
+      await competitionService.addQuestionToCompetition(
+        competitionId,
+        question.title
+      )
       handleQuestionUpdate(question)
       setSuccessMessage("Question created successfully!")
       setTimeout(() => setSuccessMessage(null), 5000)
