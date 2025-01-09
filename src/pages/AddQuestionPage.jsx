@@ -23,7 +23,8 @@ const AddQuestionPage = () => {
         const questionPollResponse = await questionService.getQuestions()
         setQuestionPoll(questionPollResponse.data)
 
-        console.log("Questions fetched:", response.data)
+        console.log("Questions List fetched:", questionListResponse.data)
+        console.log("Question poll fetched:", questionPollResponse.data)
       } catch (error) {
         console.error("Failed to fetch questions:", error)
       }
