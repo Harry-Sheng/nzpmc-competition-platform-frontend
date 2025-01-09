@@ -16,7 +16,13 @@ const CreateQuestionForm = ({ competitionId, handleQuestionUpdate }) => {
 
   const handleCreateQuestion = async (event) => {
     event.preventDefault()
-    if (!title || !correctChoice || options.some((option) => !option)) {
+    if (
+      !title ||
+      !correctChoice ||
+      options.some((option) => !option) ||
+      !difficulty ||
+      topics.length < 1
+    ) {
       setErrorMessage("Please fill out all fields correctly.")
       setTimeout(() => setErrorMessage(null), 5000)
       return
