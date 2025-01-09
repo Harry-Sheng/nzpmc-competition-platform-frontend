@@ -8,8 +8,11 @@ const CreateQuestionForm = ({ competitionId, handleQuestionUpdate }) => {
   const [title, setTitle] = useState("")
   const [options, setOptions] = useState(["", "", "", ""])
   const [correctChoice, setCorrectChoice] = useState("")
+  const [difficulty, setDifficulty] = useState("")
+  const [topics, setTopics] = useState([])
   const [errorMessage, setErrorMessage] = useState(null)
   const [successMessage, setSuccessMessage] = useState(null)
+  const availableTopics = ["Mechanics", "Waves", "Algebra", "Geometry"]
 
   const handleCreateQuestion = async (event) => {
     event.preventDefault()
@@ -24,6 +27,8 @@ const CreateQuestionForm = ({ competitionId, handleQuestionUpdate }) => {
         title,
         options,
         correctChoiceIndex: parseInt(correctChoice),
+        difficulty,
+        topics,
       }
 
       await questionService.createQuestion(newQuestion)
@@ -32,6 +37,8 @@ const CreateQuestionForm = ({ competitionId, handleQuestionUpdate }) => {
       setTitle("")
       setOptions(["", "", "", ""])
       setCorrectChoice("")
+      setDifficulty("")
+      setTopics("")
 
       setSuccessMessage("Question created successfully!")
       setTimeout(() => setSuccessMessage(null), 5000)
@@ -46,6 +53,14 @@ const CreateQuestionForm = ({ competitionId, handleQuestionUpdate }) => {
     const updatedOptions = [...options]
     updatedOptions[index] = value
     setOptions(updatedOptions)
+  }
+
+  const toggleTopic = (topic) => {
+    setTopics((prevTopics) =>
+      prevTopics.includes(topic)
+        ? prevTopics.filter((t) => t !== topic)
+        : [...prevTopics, topic]
+    )
   }
 
   return (
@@ -88,6 +103,33 @@ const CreateQuestionForm = ({ competitionId, handleQuestionUpdate }) => {
             value={correctChoice}
             onChange={({ target }) => setCorrectChoice(target.value)}
           />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="difficulty">
+          <Form.Label>Difficulty</Form.Label>
+          <Form.Control
+            as="select"
+            value={difficulty}
+            onChange={({ target }) => setDifficulty(target.value)}
+          >
+            <option value="">Select difficulty</option>
+            <option value="EASY">Easy</option>
+            <option value="MEDIUM">Medium</option>
+            <option value="HARD">Hard</option>
+          </Form.Control>
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="topics">
+          <Form.Label>Topics</Form.Label>
+          {availableTopics.map((topic) => (
+            <Form.Check
+              key={topic}
+              type="checkbox"
+              label={topic}
+              checked={topics.includes(topic)}
+              onChange={() => toggleTopic(topic)}
+            />
+          ))}
         </Form.Group>
 
         <Button variant="primary" type="submit" className="w-100">
