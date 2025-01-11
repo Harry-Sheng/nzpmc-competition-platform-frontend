@@ -10,7 +10,7 @@ const QuestionList = ({ questions }) => {
         <Card.Header>
           <h4 className="mb-0">Question List</h4>
         </Card.Header>
-        <Card.Body className="scrollable">
+        <Card.Body className="scrollable-large">
           {questions.length > 0 ? (
             questions.map((question, index) => (
               <Card key={index} className="mb-3 shadow-sm rounded ">

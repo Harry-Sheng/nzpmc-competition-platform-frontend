@@ -1,4 +1,4 @@
-import { Row, Col } from "react-bootstrap"
+import { Row, Col, Card } from "react-bootstrap"
 import { useState, useEffect } from "react"
 import eventService from "../services/Events"
 import CreateEventForm from "./CreateEventForm"
@@ -86,16 +86,22 @@ const AdminDashboard = ({ users }) => {
       <Row className="g-4">
         <Col md={8}>
           {/* Events Section */}
-          <h2 className="mb-4"> Events</h2>
-          {events.map((event, index) => (
-            <AdminEventCard
-              key={index}
-              event={event}
-              competitions={competitions}
-              handleCompetitionSelect={handleCompetitionSelect}
-              generateResult={generateResult}
-            />
-          ))}
+          <Card className="mb-3 shadow-sm rounded">
+            <Card.Header>
+              <h4 className="mb-0">Events</h4>
+            </Card.Header>
+            <Card.Body className="scrollable-small">
+              {events.map((event, index) => (
+                <AdminEventCard
+                  key={index}
+                  event={event}
+                  competitions={competitions}
+                  handleCompetitionSelect={handleCompetitionSelect}
+                  generateResult={generateResult}
+                />
+              ))}
+            </Card.Body>
+          </Card>
 
           <ResultModal
             show={showResultModal}
@@ -105,16 +111,28 @@ const AdminDashboard = ({ users }) => {
           />
 
           {/* Competition Section */}
-          <h2 className="mb-4"> Competitions</h2>
-          {competitions.map((competition, index) => (
-            <AdminCompetitionCard key={index} competition={competition} />
-          ))}
+          <Card className="mb-3 shadow-sm rounded">
+            <Card.Header>
+              <h4 className="mb-0">Competitions</h4>
+            </Card.Header>
+            <Card.Body className="scrollable-small">
+              {competitions.map((competition, index) => (
+                <AdminCompetitionCard key={index} competition={competition} />
+              ))}
+            </Card.Body>
+          </Card>
 
           {/* Accounts Section */}
-          <h2 className="mb-4"> Accounts</h2>
-          {users.map((user, index) => (
-            <AdminAccountCard key={index} user={user} />
-          ))}
+          <Card className="mb-3 shadow-sm rounded">
+            <Card.Header>
+              <h4 className="mb-0">Accounts</h4>
+            </Card.Header>
+            <Card.Body className="scrollable-small">
+              {users.map((user, index) => (
+                <AdminAccountCard key={index} user={user} />
+              ))}
+            </Card.Body>
+          </Card>
         </Col>
 
         {/* Create Section */}

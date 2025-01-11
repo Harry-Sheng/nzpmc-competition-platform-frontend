@@ -130,7 +130,7 @@ const QuestionPoll = ({ questions, competitionId, handleQuestionUpdate }) => {
         </Card.Body>
 
         {/* Question List */}
-        <Card.Body className="scrollable">
+        <Card.Body className="scrollable-large">
           {filteredQuestions.length > 0 ? (
             filteredQuestions.map((question, index) => (
               <Card key={index} className="mb-3 shadow-sm rounded ">

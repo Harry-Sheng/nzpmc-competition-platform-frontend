@@ -1,6 +1,13 @@
-.scrollable {
+.scrollable-large {
   min-height: 850px;
   max-height: 850px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.scrollable-small {
+  min-height: 610px;
+  max-height: 610px;
   overflow-y: auto;
   overflow-x: hidden;
 }
