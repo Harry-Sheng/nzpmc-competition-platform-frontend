@@ -12,6 +12,14 @@
   overflow-x: hidden;
 }
 
+.scrollable-xsmall {
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
 .backGroundHeader {
   background-color: #212529;
   padding: 10px;
