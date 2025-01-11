@@ -1,13 +1,21 @@
-import { Card, Col, Button } from "react-bootstrap"
+import { Card, Row, Col, Button, Form } from "react-bootstrap"
 import Exam from "../assets/exam.png"
 import "../style/styles.css"
 import competitionService from "../services/Competitions"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Notification from "./Notification"
 
 const QuestionPoll = ({ questions, competitionId, handleQuestionUpdate }) => {
   const [errorMessage, setErrorMessage] = useState(null)
   const [successMessage, setSuccessMessage] = useState(null)
+  const [filteredQuestions, setFilteredQuestions] = useState(questions)
+  const [difficultyFilter, setDifficultyFilter] = useState("")
+  const [topicFilter, setTopicFilter] = useState("")
+  const availableTopics = ["Mechanics", "Waves", "Algebra", "Geometry"]
+
+  useEffect(() => {
+    setFilteredQuestions(questions)
+  }, [questions])
 
   const addToCompetition = async (question) => {
     try {
@@ -20,23 +28,111 @@ const QuestionPoll = ({ questions, competitionId, handleQuestionUpdate }) => {
       setTimeout(() => setSuccessMessage(null), 5000)
     } catch (error) {
       console.error("Failed to add question:", error)
-      setErrorMessage("Failed to add question. Please try again.")
+      setErrorMessage("Failed to add question. Question already exists.")
       setTimeout(() => setErrorMessage(null), 5000)
     }
   }
+
+  const handleFilter = () => {
+    let filtered = questions
+
+    if (difficultyFilter) {
+      filtered = filtered.filter(
+        (question) => question.difficulty === difficultyFilter
+      )
+    }
+
+    if (topicFilter && topicFilter.length > 0) {
+      filtered = filtered.filter(
+        (question) =>
+          question.topics &&
+          question.topics.length === topicFilter.length &&
+          topicFilter.every((topic) => question.topics.includes(topic))
+      )
+    }
+
+    setFilteredQuestions(filtered)
+  }
+
+  const resetFilters = () => {
+    setDifficultyFilter("")
+    setTopicFilter("")
+    setFilteredQuestions(questions)
+  }
+
+  const toggleTopicFilter = (topic) => {
+    setTopicFilter((prevTopics) =>
+      prevTopics.includes(topic)
+        ? prevTopics.filter((t) => t !== topic)
+        : [...prevTopics, topic]
+    )
+  }
+
   return (
     <>
       {/* Notifications */}
       <Notification message={errorMessage} variant="danger" />
       <Notification message={successMessage} variant="success" />
+
       {/* Question List Section */}
       <Card className="mb-3 shadow-sm rounded">
         <Card.Header>
           <h4 className="mb-0">Question Poll</h4>
         </Card.Header>
+
+        {/* Filter Section */}
+        <Card.Body>
+          <Form>
+            <Row>
+              <Col md={6}>
+                <Form.Group controlId="difficultyFilter">
+                  <Form.Label>Difficulty</Form.Label>
+                  <Form.Control
+                    as="select"
+                    value={difficultyFilter}
+                    onChange={(e) => setDifficultyFilter(e.target.value)}
+                  >
+                    <option value="">All</option>
+                    <option value="EASY">Easy</option>
+                    <option value="MEDIUM">Medium</option>
+                    <option value="HARD">Hard</option>
+                  </Form.Control>
+                </Form.Group>
+                <div className="mt-3">
+                  <Button
+                    variant="primary"
+                    onClick={handleFilter}
+                    className="me-2"
+                  >
+                    Apply Filters
+                  </Button>
+                  <Button variant="secondary" onClick={resetFilters}>
+                    Reset Filters
+                  </Button>
+                </div>
+              </Col>
+              <Col md={6}>
+                <Form.Group className="mb-3" controlId="topics">
+                  <Form.Label>Topics</Form.Label>
+                  {availableTopics.map((topic) => (
+                    <Form.Check
+                      key={topic}
+                      type="checkbox"
+                      label={topic}
+                      checked={topicFilter.includes(topic)}
+                      onChange={() => toggleTopicFilter(topic)}
+                    />
+                  ))}
+                </Form.Group>
+              </Col>
+            </Row>
+          </Form>
+        </Card.Body>
+
+        {/* Question List */}
         <Card.Body className="scrollable">
-          {questions.length > 0 ? (
-            questions.map((question, index) => (
+          {filteredQuestions.length > 0 ? (
+            filteredQuestions.map((question, index) => (
               <Card key={index} className="mb-3 shadow-sm rounded ">
                 <Card.Body className="d-flex align-items-center">
                   <Col xs={3}>
