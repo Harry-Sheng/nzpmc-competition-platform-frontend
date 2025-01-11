@@ -41,7 +41,7 @@ const AddQuestionPage = () => {
   }
 
   return (
-    <div>
+    <div className="bg-light">
       <Header
         title={"Welcome Admin"}
         subtitle={

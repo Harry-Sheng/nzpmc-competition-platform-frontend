@@ -35,7 +35,7 @@ const SignUpPage = () => {
   }
 
   return (
-    <div>
+    <div className="bg-light">
       <Header
         title={"Welcome to NZPMC Registration Page"}
         subtitle={

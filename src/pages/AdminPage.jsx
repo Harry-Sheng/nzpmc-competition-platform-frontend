@@ -21,7 +21,7 @@ const AdminPage = () => {
   }, [])
 
   return (
-    <div>
+    <div className="bg-light">
       <Header
         title={"Welcome Admin"}
         subtitle={"Here is the Admin Dashboard"}

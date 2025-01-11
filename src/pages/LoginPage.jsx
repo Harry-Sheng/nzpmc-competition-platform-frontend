@@ -48,7 +48,7 @@ const LoginPage = () => {
   }
 
   return (
-    <div>
+    <div className="bg-light">
       <Header
         title={"Login to NZPMC Portal"}
         subtitle={

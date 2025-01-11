@@ -4,3 +4,8 @@
   overflow-y: auto;
   overflow-x: hidden;
 }
+
+.backGroundHeader {
+  background-color: #212529;
+  padding: 10px;
+}
