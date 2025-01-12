@@ -7,14 +7,30 @@ const CreateCompetitionForm = ({ fetchData }) => {
   const [title, setTitle] = useState("")
   const [errorMessage, setErrorMessage] = useState(null)
   const [successMessage, setSuccessMessage] = useState(null)
+  const [startTime, setStartTime] = useState("")
+  const [endTime, setEndTime] = useState("")
 
   const handleCreateCompetition = async (event) => {
     event.preventDefault()
+
+    // Validation: Check if endTime is before startTime
+    if (new Date(endTime) <= new Date(startTime)) {
+      setErrorMessage("End time must be after start time")
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+      return
+    }
+
     try {
       const createdCompetition = await competitionService.create({
         title,
+        startTime,
+        endTime,
       })
       setTitle("")
+      setStartTime("")
+      setEndTime("")
       setSuccessMessage("Competition created successfully")
       setTimeout(() => {
         setSuccessMessage(null)
@@ -44,6 +60,22 @@ const CreateCompetitionForm = ({ fetchData }) => {
             placeholder="Enter competition Title"
             value={title}
             onChange={({ target }) => setTitle(target.value)}
+          />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="competitionStartTime">
+          <Form.Label>Start Time</Form.Label>
+          <Form.Control
+            type="datetime-local"
+            value={startTime}
+            onChange={({ target }) => setStartTime(target.value)}
+          />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="competitionEndTime">
+          <Form.Label>End Time</Form.Label>
+          <Form.Control
+            type="datetime-local"
+            value={endTime}
+            onChange={({ target }) => setEndTime(target.value)}
           />
         </Form.Group>
         <Button variant="primary" type="submit" className="w-100">
