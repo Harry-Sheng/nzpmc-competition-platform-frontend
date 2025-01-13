@@ -91,9 +91,12 @@ const CompetitionPage = () => {
 
   if (questions.length === 0) {
     return (
-      <div className="min-vh-100 d-flex justify-content-center align-items-center">
-        <h3>There is no questions for this competition...</h3>
-      </div>
+      <>
+        <NavBar />
+        <div className="min-vh-100 d-flex justify-content-center align-items-center">
+          <h3>There is no questions for this competition...</h3>
+        </div>
+      </>
     )
   }
 
