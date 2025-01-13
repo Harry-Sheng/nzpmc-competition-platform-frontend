@@ -7,6 +7,7 @@ import AdminPage from "./pages/AdminPage"
 import ProtectedRoute from "./Route/ProtectedRoute"
 import AddQuestionPage from "./pages/AddQuestionPage"
 import CompetitionPage from "./pages/CompetitionPage"
+import ProtectedCompetitionRoute from "./Route/ProtectedCompetitionRoute"
 
 const App = () => {
   return (
@@ -33,7 +34,7 @@ const App = () => {
           />
           <Route
             path="/competition/:competitionId"
-            element={<CompetitionPage />}
+            element={<ProtectedCompetitionRoute element={CompetitionPage} />}
           />
         </Routes>
       </Router>
