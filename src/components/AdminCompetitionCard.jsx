@@ -2,21 +2,9 @@ import React from "react"
 import { Card, Col, Button } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import Exam from "../assets/exam.png"
+import { formatToNZTime } from "../utils/date"
 
 const AdminCompetitionCard = ({ competition }) => {
-  // Convert UTC to New Zealand Time (NZT)
-  const formatToNZTime = (utcDate) => {
-    const options = {
-      timeZone: "Pacific/Auckland",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    }
-    return new Intl.DateTimeFormat("en-NZ", options).format(new Date(utcDate))
-  }
-
   const startTimeNZ = competition.startTime
     ? formatToNZTime(competition.startTime)
     : "N/A"

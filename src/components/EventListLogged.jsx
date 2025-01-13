@@ -3,14 +3,41 @@ import Exam from "../assets/exam.png"
 import { useState, useEffect, useContext } from "react"
 import { UserContext } from "../context/UserContext"
 import eventService from "../services/Events"
+import competitionService from "../services/Competitions"
 import userService from "../services/User"
 import { useNavigate } from "react-router-dom"
+import { formatToNZTime } from "../utils/date"
 
 const EventListWithUserDetails = ({ events, userEvents, setUserEvents }) => {
   const { user, setUser } = useContext(UserContext)
   const [showModal, setShowModal] = useState(false)
   const [newName, setNewName] = useState("")
   const navigate = useNavigate()
+  const [competitionDetails, setCompetitionDetails] = useState({})
+
+  useEffect(() => {
+    events.forEach((event) => {
+      if (event.competitionId) {
+        fetchCompetitionDetails(event.competitionId)
+      }
+    })
+  }, [events])
+
+  const fetchCompetitionDetails = async (competitionId) => {
+    if (!competitionId || competitionDetails[competitionId]) return
+    try {
+      const response =
+        await competitionService.getCompetitionById(competitionId)
+      const competition = response.data
+
+      setCompetitionDetails((prevDetails) => ({
+        ...prevDetails,
+        [competitionId]: competition,
+      }))
+    } catch (error) {
+      console.error("Error fetching competition details:", error)
+    }
+  }
 
   const isUserJoined = (eventId) => {
     if (!userEvents) {
@@ -50,61 +77,82 @@ const EventListWithUserDetails = ({ events, userEvents, setUserEvents }) => {
     <Row className="g-4">
       {/* Events Section */}
       <Col md={9}>
-        {events.map((event, index) => (
-          <Card key={index} className="mb-3 shadow-sm rounded">
-            <Card.Body className="d-flex align-items-center">
-              <Col xs={3}>
-                <img
-                  src={Exam}
-                  alt="Event"
-                  className="img-fluid rounded"
-                  style={{ maxHeight: "100px", objectFit: "cover" }}
-                />
-              </Col>
-              <Col xs={6} className="ps-3">
-                <h5 className="mb-1">{event.name}</h5>
-                <p className="text-muted mb-1">{event.description}</p>
-                <p className="text-muted mb-0">{event.date}</p>
-              </Col>
-              <Col xs={2.1} className="d-flex flex-column justify-content-end">
-                {isUserJoined(event.name) ? (
-                  //* If user has joined the event */
-                  <>
-                    <Button
-                      variant="outline-secondary"
-                      className="mb-2"
-                      disabled
-                    >
-                      Joined!
-                    </Button>
-                    {isCompetitionLinked(event) ? (
+        {events.map((event, index) => {
+          const competition =
+            event.competitionId && competitionDetails[event.competitionId]
+          const startTime = competition
+            ? formatToNZTime(competition.startTime)
+            : "Loading..."
+          const endTime = competition
+            ? formatToNZTime(competition.endTime)
+            : "Loading..."
+
+          return (
+            <Card key={index} className="mb-3 shadow-sm rounded">
+              <Card.Body className="d-flex align-items-center">
+                <Col xs={3}>
+                  <img
+                    src={Exam}
+                    alt="Event"
+                    className="img-fluid rounded"
+                    style={{ maxHeight: "100px", objectFit: "cover" }}
+                  />
+                </Col>
+                <Col xs={6} className="ps-3">
+                  <h5 className="mb-1">{event.name}</h5>
+                  <p className="text-muted mb-1">{event.description}</p>
+                  {event.competitionId && (
+                    <>
+                      <p className="text-muted mb-1">
+                        <strong>Start Time:</strong> {startTime}
+                      </p>
+                      <p className="text-muted mb-0">
+                        <strong>End Time:</strong> {endTime}
+                      </p>
+                    </>
+                  )}
+                </Col>
+                <Col
+                  xs={2.1}
+                  className="d-flex flex-column justify-content-end"
+                >
+                  {isUserJoined(event.name) ? (
+                    <>
                       <Button
-                        variant="success"
-                        onClick={() =>
-                          handleJoinCompetition(event.competitionId)
-                        }
+                        variant="outline-secondary"
+                        className="mb-2"
+                        disabled
                       >
-                        Compete!
+                        Joined!
                       </Button>
-                    ) : (
-                      <Button variant="secondary" className="mb-2" disabled>
-                        No Competition
-                      </Button>
-                    )}
-                  </>
-                ) : (
-                  //* If user have not joined the event */
-                  <Button
-                    variant="primary"
-                    onClick={() => handleJoin(event.name)}
-                  >
-                    Join
-                  </Button>
-                )}
-              </Col>
-            </Card.Body>
-          </Card>
-        ))}
+                      {event.competitionId ? (
+                        <Button
+                          variant="success"
+                          onClick={() =>
+                            handleJoinCompetition(event.competitionId)
+                          }
+                        >
+                          Compete!
+                        </Button>
+                      ) : (
+                        <Button variant="secondary" className="mb-2" disabled>
+                          No Competition
+                        </Button>
+                      )}
+                    </>
+                  ) : (
+                    <Button
+                      variant="primary"
+                      onClick={() => handleJoin(event.name)}
+                    >
+                      Join
+                    </Button>
+                  )}
+                </Col>
+              </Card.Body>
+            </Card>
+          )
+        })}
       </Col>
 
       {/* User Details Section */}

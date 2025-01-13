@@ -20,9 +20,14 @@ const addQuestionToCompetition = (competitionId, questionTitle) => {
   })
 }
 
+const getCompetitionById = (competitionId) => {
+  return axios.post(`${baseUrl}/getById`, { competitionId })
+}
+
 export default {
   fetchCompetitions,
   create,
   fetchQuestions,
   addQuestionToCompetition,
+  getCompetitionById,
 }
