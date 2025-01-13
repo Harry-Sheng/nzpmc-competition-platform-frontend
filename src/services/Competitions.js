@@ -24,10 +24,15 @@ const getCompetitionById = (competitionId) => {
   return axios.post(`${baseUrl}/getById`, { competitionId })
 }
 
+const isInCompetitionTime = (competitionId) => {
+  return axios.post(`${baseUrl}/inInCompetitionTime`, { competitionId })
+}
+
 export default {
   fetchCompetitions,
   create,
   fetchQuestions,
   addQuestionToCompetition,
   getCompetitionById,
+  isInCompetitionTime,
 }

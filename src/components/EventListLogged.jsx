@@ -14,13 +14,22 @@ const EventListWithUserDetails = ({ events, userEvents, setUserEvents }) => {
   const [newName, setNewName] = useState("")
   const navigate = useNavigate()
   const [competitionDetails, setCompetitionDetails] = useState({})
+  const [competitionInTimeMap, setCompetitionInTimeMap] = useState({})
 
   useEffect(() => {
-    events.forEach((event) => {
-      if (event.competitionId) {
-        fetchCompetitionDetails(event.competitionId)
+    const fetchDetails = async () => {
+      const inTimeMap = {}
+      for (const event of events) {
+        if (event.competitionId) {
+          await fetchCompetitionDetails(event.competitionId)
+          const isInTime = await isInCompetitionTime(event.competitionId)
+          inTimeMap[event.competitionId] = isInTime
+        }
       }
-    })
+      setCompetitionInTimeMap(inTimeMap)
+    }
+
+    fetchDetails()
   }, [events])
 
   const fetchCompetitionDetails = async (competitionId) => {
@@ -39,6 +48,12 @@ const EventListWithUserDetails = ({ events, userEvents, setUserEvents }) => {
     }
   }
 
+  const isInCompetitionTime = async (competitionId) => {
+    if (!competitionId) return false
+    const response = await competitionService.isInCompetitionTime(competitionId)
+    return response.data
+  }
+
   const isUserJoined = (eventId) => {
     if (!userEvents) {
       return false
@@ -53,7 +68,12 @@ const EventListWithUserDetails = ({ events, userEvents, setUserEvents }) => {
     return event.competitionId !== null
   }
 
-  const handleJoinCompetition = (competitionId) => {
+  const handleJoinCompetition = async (competitionId) => {
+    const isInTime = await isInCompetitionTime(competitionId)
+    if (!isInTime) {
+      alert("Competition is not in progress!")
+      return
+    }
     navigate(`/competition/${competitionId}`)
   }
 
@@ -86,6 +106,8 @@ const EventListWithUserDetails = ({ events, userEvents, setUserEvents }) => {
           const endTime = competition
             ? formatToNZTime(competition.endTime)
             : "Loading..."
+          const isInTime =
+            event.competitionId && competitionInTimeMap[event.competitionId]
 
           return (
             <Card key={index} className="mb-3 shadow-sm rounded">
@@ -131,6 +153,7 @@ const EventListWithUserDetails = ({ events, userEvents, setUserEvents }) => {
                           onClick={() =>
                             handleJoinCompetition(event.competitionId)
                           }
+                          disabled={!isInTime}
                         >
                           Compete!
                         </Button>
