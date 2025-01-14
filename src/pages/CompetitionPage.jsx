@@ -17,25 +17,53 @@ const CompetitionPage = () => {
   const [selectedAnswers, setSelectedAnswers] = useState(new Map())
   const [finishedCompetition, setFinishedCompetition] = useState(false)
   const [timeElapsed, setTimeElapsed] = useState(0)
+  const [remainingTime, setRemainingTime] = useState(-1)
+  const [competitionDetails, setCompetitionDetails] = useState([])
   const Navigate = useNavigate()
 
   useEffect(() => {
     fetchQuestions()
+    getCompetitionDetails()
   }, [])
 
   useEffect(() => {
+    const updateRemainingTime = () => {
+      const endTime = competitionDetails.endTime
+      const now = new Date().getTime()
+      const end = new Date(endTime).getTime()
+      setRemainingTime(Math.max(0, Math.floor((end - now) / 1000))) // Prevent negative time
+    }
+
+    updateRemainingTime()
+
     const timerId = setInterval(() => {
       if (!finishedCompetition) {
+        updateRemainingTime()
         setTimeElapsed((prevTime) => prevTime + 1)
       }
     }, 1000)
+
+    // Cleanup timer
     return () => clearInterval(timerId)
-  }, [finishedCompetition])
+  }, [competitionDetails, finishedCompetition])
+
+  // Auto-submit when the timer runs out
+  useEffect(() => {
+    if (remainingTime === 0) {
+      saveAttempt()
+      setFinishedCompetition(true)
+    }
+  }, [remainingTime])
+
+  const getCompetitionDetails = async () => {
+    const response = await competitionService.getCompetitionById(competitionId)
+    const competition = response.data
+    setCompetitionDetails(competition)
+  }
 
   const fetchQuestions = async () => {
     const response = await competitionService.fetchQuestions(competitionId)
     const fetchedQuestions = response.data
-    console.log(response.data)
     setQuestions(fetchedQuestions)
     const initialAnswers = new Map(
       fetchedQuestions.map((question) => [question.title, -1])
@@ -73,6 +101,7 @@ const CompetitionPage = () => {
     console.log(newAttempt)
     attemptService.saveAttempt(competitionId, newAttempt)
   }
+
   const redirectToHomePage = () => {
     Navigate("/")
   }
@@ -84,9 +113,10 @@ const CompetitionPage = () => {
     100
 
   const formatTime = (time) => {
-    const minutes = Math.floor(time / 60)
+    const hours = Math.floor(time / 3600)
+    const minutes = Math.floor((time % 3600) / 60)
     const seconds = time % 60
-    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`
+    return `${hours}:${minutes < 10 ? "0" : ""}${minutes}:${seconds < 10 ? "0" : ""}${seconds}`
   }
 
   if (questions.length === 0) {
@@ -126,7 +156,7 @@ const CompetitionPage = () => {
             <Col md={3}>
               <CompetitionSideBar
                 formatTime={formatTime}
-                timeElapsed={timeElapsed}
+                remainingTime={remainingTime}
                 progress={progress}
                 currentQuestion={currentQuestion}
                 handleQuestionSelect={handleQuestionSelect}

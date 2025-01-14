@@ -2,7 +2,7 @@ import { Button, Card, ProgressBar } from "react-bootstrap"
 
 export function CompetitionSideBar({
   formatTime,
-  timeElapsed,
+  remainingTime,
   progress,
   currentQuestion,
   handleQuestionSelect,
@@ -13,7 +13,7 @@ export function CompetitionSideBar({
   return (
     <Card>
       <Card.Body>
-        <h5>Time: {formatTime(timeElapsed)}</h5>
+        <h5>Time: {formatTime(remainingTime)}</h5>
         <ProgressBar now={progress} variant="success" className="mb-3" />
         <div className="d-grid ">
           <div className="scrollable-xsmall">
