@@ -1,4 +1,6 @@
 import { Button, Card, ProgressBar } from "react-bootstrap"
+import Notification from "./Notification"
+import { useEffect, useState } from "react"
 
 export function CompetitionSideBar({
   formatTime,
@@ -10,9 +12,23 @@ export function CompetitionSideBar({
   questions,
   selectedAnswers,
 }) {
+  const [errorMessage, setErrorMessage] = useState(false)
+
+  useEffect(() => {
+    // Show warning when 5 minutes (300 seconds) or less are left
+    if (remainingTime <= 300 && remainingTime > 240) {
+      setErrorMessage(true)
+    } else {
+      setErrorMessage(false)
+    }
+  }, [remainingTime])
+
   return (
     <Card>
       <Card.Body>
+        {errorMessage && (
+          <Notification message="Only 5 minutes left!" variant="warning" />
+        )}
         <h5>Time: {formatTime(remainingTime)}</h5>
         <ProgressBar now={progress} variant="success" className="mb-3" />
         <div className="d-grid ">
