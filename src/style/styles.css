@@ -24,3 +24,7 @@
   background-color: #212529;
   padding: 10px;
 }
+
+.markdown-container p {
+  margin: 0;
+}

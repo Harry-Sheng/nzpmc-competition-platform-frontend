@@ -8,6 +8,8 @@ import {
   CloseButton,
 } from "react-bootstrap"
 import getChatGptResponse from "../../services/ChatGPT"
+import ReactMarkdown from "react-markdown"
+import remarkGfm from "remark-gfm"
 
 const ChatPopUp = ({ onClose }) => {
   const [messages, setMessages] = useState([])
@@ -60,7 +62,12 @@ const ChatPopUp = ({ onClose }) => {
       </Card.Header>
       <Card.Body>
         <ListGroup
-          style={{ minHeight: "60vh", maxHeight: "60vh", overflowY: "auto" }}
+          style={{
+            minHeight: "60vh",
+            maxHeight: "60vh",
+            overflowY: "auto",
+            overflowX: "hidden",
+          }}
         >
           {welcomeMessage.map((welcomeMessage, index) => (
             <ListGroup.Item
@@ -79,13 +86,15 @@ const ChatPopUp = ({ onClose }) => {
               style={{ border: "none" }}
             >
               <div
-                className={
+                className={`markdown-container ${
                   m.role === "user"
                     ? "bg-primary text-white rounded p-2"
                     : "bg-light rounded p-2"
-                }
+                }`}
               >
-                {m.content}
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                  {m.content}
+                </ReactMarkdown>
               </div>
             </ListGroup.Item>
           ))}
