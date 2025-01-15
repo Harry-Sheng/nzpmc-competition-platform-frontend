@@ -7,47 +7,74 @@ import {
   InputGroup,
   CloseButton,
 } from "react-bootstrap"
+import getChatGptResponse from "../../services/ChatGPT"
 
 const ChatPopUp = ({ onClose }) => {
   const [messages, setMessages] = useState([])
   const [input, setInput] = useState("")
   const [isTyping, setIsTyping] = useState(false)
-
-  const handleSubmit = (e) => {
+  const welcomeMessage = [
+    "Hi, I'm Harry - your NZPMC virtual assistant. Ask me a question and I'll try to help.",
+    "I can provide info about NZPMC, answer questions about competitions.",
+  ]
+  const handleSubmit = async (e) => {
     e.preventDefault()
     if (input.trim() === "") return
 
+    setIsTyping(true)
+
     // Add user message
-    const userMessage = { id: Date.now(), role: "user", content: input }
-    setMessages((prevMessages) => [...prevMessages, userMessage])
+    const userMessage = { role: "user", content: input }
+    const updatedMessages = [...messages, userMessage]
+    setMessages(updatedMessages)
     setInput("")
 
-    // Simulate AI response
-    setIsTyping(true)
-    setTimeout(() => {
-      const aiMessage = {
-        id: Date.now(),
-        role: "ai",
-        content: "This is a simulated AI response.",
+    // Call backend for ChatGpt response
+    try {
+      const response = await getChatGptResponse(updatedMessages)
+      const chatGptResponse = response.data.choices[0].message.content
+
+      const chatGptMessage = {
+        role: "assistant",
+        content: chatGptResponse,
       }
-      setMessages((prevMessages) => [...prevMessages, aiMessage])
+
+      setMessages((prevMessages) => [...prevMessages, chatGptMessage])
+    } catch (error) {
+      console.error(error)
+      const errorMessage = {
+        role: "assistant",
+        content: "An error occurred while fetching the response.",
+      }
+      setMessages((prevMessages) => [...prevMessages, errorMessage])
+    } finally {
       setIsTyping(false)
-    }, 1000)
+    }
   }
 
   return (
     <Card style={{ width: "24rem" }}>
       <Card.Header className="d-flex justify-content-between">
-        <span>AI Chatbot</span>
+        <span>Harry</span>
         <CloseButton onClick={onClose} />
       </Card.Header>
       <Card.Body>
         <ListGroup
-          style={{ minHeight: "300px", maxHeight: "300px", overflowY: "auto" }}
+          style={{ minHeight: "60vh", maxHeight: "60vh", overflowY: "auto" }}
         >
-          {messages.map((m) => (
+          {welcomeMessage.map((welcomeMessage, index) => (
             <ListGroup.Item
-              key={m.id}
+              key={index}
+              className="d-flex justify-content-start"
+              style={{ border: "none" }}
+            >
+              <div className="bg-light rounded p-2">{welcomeMessage}</div>
+            </ListGroup.Item>
+          ))}
+
+          {messages.map((m, index) => (
+            <ListGroup.Item
+              key={index}
               className={`d-flex ${m.role === "user" ? "justify-content-end" : "justify-content-start"}`}
               style={{ border: "none" }}
             >
@@ -62,12 +89,13 @@ const ChatPopUp = ({ onClose }) => {
               </div>
             </ListGroup.Item>
           ))}
+
           {isTyping && (
             <ListGroup.Item
               className="d-flex justify-content-start"
               style={{ border: "none" }}
             >
-              <div className="bg-light rounded p-2">AI is typing...</div>
+              <div className="bg-light rounded p-2">Harry is typing...</div>
             </ListGroup.Item>
           )}
         </ListGroup>
