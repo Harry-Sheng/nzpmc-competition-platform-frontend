@@ -1,10 +1,12 @@
 import { useState } from "react"
-import Button from "react-bootstrap/Button"
-import Form from "react-bootstrap/Form"
-import Card from "react-bootstrap/Card"
-import ListGroup from "react-bootstrap/ListGroup"
-import InputGroup from "react-bootstrap/InputGroup"
-import { CloseButton } from "react-bootstrap"
+import {
+  Button,
+  Form,
+  Card,
+  ListGroup,
+  InputGroup,
+  CloseButton,
+} from "react-bootstrap"
 
 const ChatPopUp = ({ onClose }) => {
   const [messages, setMessages] = useState([])
@@ -34,7 +36,7 @@ const ChatPopUp = ({ onClose }) => {
   }
 
   return (
-    <Card style={{ width: "24rem", boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)" }}>
+    <Card style={{ width: "24rem" }}>
       <Card.Header className="d-flex justify-content-between">
         <span>AI Chatbot</span>
         <CloseButton onClick={onClose} />
@@ -49,16 +51,14 @@ const ChatPopUp = ({ onClose }) => {
               className={`d-flex ${m.role === "user" ? "justify-content-end" : "justify-content-start"}`}
               style={{ border: "none" }}
             >
-              <div className="d-flex align-items-start gap-2">
-                <div
-                  className={
-                    m.role === "user"
-                      ? "bg-primary text-white rounded p-2"
-                      : "bg-light rounded p-2"
-                  }
-                >
-                  {m.content}
-                </div>
+              <div
+                className={
+                  m.role === "user"
+                    ? "bg-primary text-white rounded p-2"
+                    : "bg-light rounded p-2"
+                }
+              >
+                {m.content}
               </div>
             </ListGroup.Item>
           ))}
@@ -67,9 +67,7 @@ const ChatPopUp = ({ onClose }) => {
               className="d-flex justify-content-start"
               style={{ border: "none" }}
             >
-              <div className="d-flex align-items-start gap-2">
-                <div className="bg-light rounded p-2">AI is typing...</div>
-              </div>
+              <div className="bg-light rounded p-2">AI is typing...</div>
             </ListGroup.Item>
           )}
         </ListGroup>
