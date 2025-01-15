@@ -1,6 +1,7 @@
 import { useState } from "react"
 import Button from "react-bootstrap/Button"
 import ChatPopUp from "./ChatPopUp"
+import { Robot } from "react-bootstrap-icons"
 
 const ChatBotPopUp = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -14,9 +15,12 @@ const ChatBotPopUp = () => {
       ) : (
         <Button
           onClick={() => setIsOpen(true)}
-          style={{ borderRadius: "50%", height: "3rem", width: "3rem" }}
+          className="rounded-circle d-flex align-items-center justify-content-center"
+          style={{ height: "3rem", width: "3rem" }}
           variant="primary"
-        />
+        >
+          <Robot size={30} color="white" />
+        </Button>
       )}
     </div>
   )
