@@ -6,6 +6,7 @@ import EventList from "../components/EventList"
 import eventsService from "../services/Events"
 import { Container } from "react-bootstrap"
 import NavBar from "../components/NavBar"
+import ChatBotPopUp from "../components/ChatBot/ChatBotPopUp"
 
 const LandingPageNotLogged = () => {
   const [events, setEvents] = useState([])
@@ -31,6 +32,7 @@ const LandingPageNotLogged = () => {
         />
         <EventList events={events} />
       </Container>
+      <ChatBotPopUp />
     </>
   )
 }

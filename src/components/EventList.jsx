@@ -4,7 +4,6 @@ import { Link } from "react-router-dom"
 import { useState, useEffect } from "react"
 import competitionService from "../services/Competitions"
 import { formatToNZTime } from "../utils/date"
-import ChatBotPopUp from "../components/ChatBot/ChatBotPopUp"
 
 const EventList = ({ events }) => {
   const [competitionDetails, setCompetitionDetails] = useState({})
@@ -72,7 +71,6 @@ const EventList = ({ events }) => {
           )
         })}
       </Row>
-      <ChatBotPopUp />
     </>
   )
 }

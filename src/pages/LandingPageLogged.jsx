@@ -4,6 +4,7 @@ import EventListLogged from "../components/EventListLogged"
 import { UserContext } from "../context/UserContext"
 import eventsService from "../services/Events"
 import userService from "../services/User"
+import ChatBotPopUp from "../components/ChatBot/ChatBotPopUp"
 
 const LandingPageLogged = () => {
   const [events, setEvents] = useState([])
@@ -37,6 +38,7 @@ const LandingPageLogged = () => {
           setUserEvents={setUserEvents}
         />
       </div>
+      <ChatBotPopUp />
     </div>
   )
 }
