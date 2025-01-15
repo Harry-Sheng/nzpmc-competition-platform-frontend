@@ -37,7 +37,9 @@ export function CompetitionSideBar({
               <Button
                 key={index}
                 variant={
-                  currentQuestion === index ? "primary" : "outline-primary"
+                  currentQuestion === index
+                    ? "primary"
+                    : "outline-primary text-black"
                 }
                 className="text-start position-relative"
                 onClick={() => handleQuestionSelect(index)}

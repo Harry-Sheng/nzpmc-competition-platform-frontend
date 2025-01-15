@@ -25,8 +25,8 @@ export function CompetitionQuestionCard({
             <Button
               variant={
                 selectedAnswers.get(questions[currentQuestion].title) === index
-                  ? "primary"
-                  : "outline-primary"
+                  ? "primary text-white"
+                  : "outline-primary text-black"
               }
               className={`w-100 py-4 d-flex align-items-center justify-content-center`}
               onClick={() => handleOptionSelect(index)}
