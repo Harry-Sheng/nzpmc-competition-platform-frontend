@@ -1,20 +1,88 @@
-# NZPMC Competition Platform Backend
+# NZPMC Competition Platform Demo
 
-This is a competition platform demo which support logging, register for events, join competition, an admin pane and much more.
+This is a competition platform demo which support logging, register for events, join competition, competes, an admin dashboard and much more. There is even a chatbot to answer all your questions about NZPMC. Built with React, Spring Boot, and MongoDB
 
-### wireframe
+## Table of Contents
 
-![wireframe](./src/assets/wireframe.png)
+1. [Features](#features)
+2. [Technologies Used](#technologies-used)
+3. [Get Started](#get-started)
+4. [CodeBase Structure](#codebase-structure)
+5. [Key Decisions](#key-decisions)
+6. [Images](#images)
+7. [Backend End code](#backend-end-code)
 
-### Live Demo
+## Features
 
-Live Demo: only for registration module
-https://nzpmc-registration-platform-backend.onrender.com
-Note: It may take 1-3 mins because I am on free tier
+- OpenAI chatbot integration for answering NZPMC related questions for users.
+- Responsive design for desktop and mobile users using react-bootstrap.
+- Global state management using React Context.
+- User authentication and authorization (JWT).
+- Protected routes for authenticated users.
+- CRUD functionality for tasks.
 
-### Front End code
+## Technologies Used
 
-https://github.com/Harry-Sheng/nzpmc-registration-platform-frontend
+- Frontend: React, react-context, react-Bootstrap
+- Backend: Spring Boot, Spring Boot Security
+- Database: MongoDB
+- Authentication: JSON Web Tokens (JWT)
+- Chatbot: OpenAI API
+
+## Get Started
+
+### Frontend
+
+1. Clone the repository
+
+```bash
+git clone https://github.com/Harry-Sheng/nzpmc-registration-platform-frontend
+```
+
+2. Install dependencies
+
+```bash
+cd nzpmc-registration-platform-frontend
+npm install
+```
+
+3. Start the development server
+
+```bash
+npm run dev
+```
+
+### Backend
+
+1. Clone the repository
+
+```bash
+git clone https://github.com/Harry-Sheng/nzpmc-registration-platform-backend
+```
+
+2. Set environment variables
+
+go to resources/application.properties and set the following variables
+
+```bash
+spring.application.name={your application name}
+spring.data.mongodb.url={your mongodb url}
+spring.data.mongodb.database={your database name}
+
+# JWT configuration, jwt token expires in a day
+jwt.secret={your secret}
+jwt.jwtExpirationMs={your expiration time}
+openai.api.key = {your openai api key}
+```
+
+3. Install dependencies
+
+```bash
+cd nzpmc-registration-platform-backend/SpringBootBackend/CompetitionPlatform
+./gradlew build //This should work, however I have not tested it yet. Message me if it does not work
+```
+
+4. run the application
 
 ## CodeBase Structure
 
@@ -22,47 +90,65 @@ Front End
 
 ```
 src
-  assets
-  components
-  context
-  pages
-  services
-  style
+  assets     // images
+  components // reusable UI components
+  context    // global state management
+  pages      // top-level page components
+  routes     // protected routes
+  services   // API interaction logic
+  style      // global css
+  utile      // utility functions
 
-app.jsx
-main.jsx
+app.jsx      // root-level component handles routing
+main.jsx     // entry point
 ```
-
-- **assets**  
-   Stores images.
-- **components**  
-   Reusable UI components and forms that can be shared across multiple pages.
-- **context**  
-   Create global state for user login information using react context
-- **pages**  
-   Defines top-level page components. Each page corresponds to a route within the app except landingPageLogged and landingPageNotLogged they corresponds to logged/notLogged state of landing page.
-- **services**  
-   Encapsulates logic for interacting with APIs or back-end systems. These modules manage data fetching, authentication, and other business logic.
-- **style**  
-   Holds style for navigation bar. For other components I user react bootstrap so this is the only css file in this folder.
-- **App.jsx**  
-   The root-level component that sets up the overall structure and routing of the application.
-- **main.jsx**  
-   The entry point of the React application. Renders the `App` component into the DOM, initializing the app in the browser.
 
 Back End
 
 ```
-In progress
+src
+  main
+    java
+      com.nzpmc.CompetitionPlatform
+        config     // configuration classes
+        controller // REST API controllers
+        dto        // data transfer objects
+        models     // mongodb entities
+        repository // mongo repositories
+        service    // service classes
 ```
 
-### Extra Features
+## Key Decisions
 
--JWT Authentication:
-Using JWT (JSON Web Token) is a straightforward and widely adopted method for handling user authentication in SPAs. It simplifies the token exchange process between frontend and backend, avoids storing sessions on the server, and integrates well with React Context for maintaining logged-in states.
+### JWT Authentication:
 
--React Context for Authentication:
-Context allows the authentication state to be easily accessed across components without manual prop passing. This streamlines user experience in scenarios like conditional rendering of navigation items, access to restricted pages, and form submissions that require authentication.
+- simplifies the token exchange process between frontend and backend, avoids storing sessions on the server.
+- integrates well with React Context for maintaining logged-in states.
+- provides a secure way to authenticate users and authorize access to protected resources.
+- JWT tokens work well in distributed systems and microservices architectures. Future scalability and microservices integration are supported.
 
--React Bootstrap and Minimal Custom CSS:
-React Bootstrap provides prebuilt, responsive components that adhere to modern UI/UX standards, reducing the need for custom styling from scratch.
+### React Context for Authentication:
+
+- Allows the authentication state to be easily accessed across components without manual prop passing.
+
+### React Bootstrap and Minimal Custom CSS:
+
+- React Bootstrap provides prebuilt, responsive components that adhere to modern UI/UX standards, reducing the need for custom styling from scratch.
+
+### OpenAI Chatbot Integration:
+
+- Provides a conversational interface for users to ask questions and get instant responses.
+- Easier for users to find information and get help.
+
+## images
+
+![wireframe](./assets/wireframe.png)
+![landingpage](./assets/landingpage.png)
+![adminpage](./assets/adminpage.png)
+![questionpoll](./assets/questionpoll.png)
+![competitionpage](./assets/competitionpage.png)
+![chatbot](./assets/chatbot.png)
+
+## Backend End code
+
+https://github.com/Harry-Sheng/nzpmc-registration-platform-backend
