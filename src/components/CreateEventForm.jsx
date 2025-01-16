@@ -9,8 +9,15 @@ const CreateEventForm = ({ fetchData }) => {
   const [date, setDate] = useState("")
   const [errorMessage, setErrorMessage] = useState(null)
   const [successMessage, setSuccessMessage] = useState(null)
+
   const handleCreateEvent = async (event) => {
     event.preventDefault()
+    if (!name || !description || !date) {
+      setErrorMessage("Please fill out all fields correctly.")
+      setTimeout(() => setErrorMessage(null), 5000)
+      return
+    }
+
     try {
       const createdEvent = await eventService.create({
         name,

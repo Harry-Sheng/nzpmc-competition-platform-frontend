@@ -13,6 +13,12 @@ const CreateCompetitionForm = ({ fetchData }) => {
   const handleCreateCompetition = async (event) => {
     event.preventDefault()
 
+    if (!title || !startTime || !endTime) {
+      setErrorMessage("Please fill out all fields correctly.")
+      setTimeout(() => setErrorMessage(null), 5000)
+      return
+    }
+
     // Validation: Check if endTime is before startTime
     if (new Date(endTime) <= new Date(startTime)) {
       setErrorMessage("End time must be after start time")
