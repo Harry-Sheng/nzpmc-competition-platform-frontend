@@ -81,6 +81,23 @@ const AdminDashboard = ({ users }) => {
     setSelectedEvent(null)
   }
 
+  const deleteEvent = async (eventId) => {
+    try {
+      const confirmation = window.confirm(
+        "Are you sure you want to delete " + eventId + "?"
+      )
+      if (confirmation) {
+        await eventService.deleteEvent(eventId)
+        setEvents((prevEvents) =>
+          prevEvents.filter((event) => event.name !== eventId)
+        )
+      }
+    } catch (error) {
+      console.error("Failed to delete event:", error)
+      alert("An error occurred while deleting the event. Please try again.")
+    }
+  }
+
   return (
     <>
       <Row className="g-4">
@@ -98,6 +115,7 @@ const AdminDashboard = ({ users }) => {
                   competitions={competitions}
                   handleCompetitionSelect={handleCompetitionSelect}
                   generateResult={generateResult}
+                  deleteEvent={deleteEvent}
                 />
               ))}
             </Card.Body>

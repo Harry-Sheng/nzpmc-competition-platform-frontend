@@ -7,6 +7,7 @@ const AdminEventCard = ({
   competitions,
   handleCompetitionSelect,
   generateResult,
+  deleteEvent,
 }) => (
   <Card className="mb-3 shadow-sm rounded">
     <Card.Body className="d-flex align-items-center">
@@ -46,8 +47,12 @@ const AdminEventCard = ({
           variant="success"
           onClick={() => generateResult(event)}
           disabled={!event.competitionId}
+          className="mb-2"
         >
           Result
+        </Button>
+        <Button variant="danger" onClick={() => deleteEvent(event.name)}>
+          Delete
         </Button>
       </Col>
     </Card.Body>
