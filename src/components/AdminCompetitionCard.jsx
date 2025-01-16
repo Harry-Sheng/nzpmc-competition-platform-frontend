@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 import Exam from "../assets/exam.png"
 import { formatToNZTime } from "../utils/date"
 
-const AdminCompetitionCard = ({ competition }) => {
+const AdminCompetitionCard = ({ competition, deleteCompetition }) => {
   const startTimeNZ = competition.startTime
     ? formatToNZTime(competition.startTime)
     : "N/A"
@@ -32,10 +32,18 @@ const AdminCompetitionCard = ({ competition }) => {
             <strong>End Time:</strong> {endTimeNZ}
           </p>
         </Col>
-        <Col xs={2} className="d-flex justify-content-end">
+        <Col xs={2} className="d-flex flex-column justify-content-end">
           <Link to={`/addquestion/${competition.title}`}>
-            <Button variant="primary">Add Question</Button>
+            <Button variant="primary" className="mb-2">
+              Add Question
+            </Button>
           </Link>
+          <Button
+            variant="danger"
+            onClick={() => deleteCompetition(competition.title)}
+          >
+            Delete
+          </Button>
         </Col>
       </Card.Body>
     </Card>

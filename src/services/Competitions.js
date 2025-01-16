@@ -28,6 +28,10 @@ const isInCompetitionTime = (competitionId) => {
   return axios.post(`${baseUrl}/inInCompetitionTime`, { competitionId })
 }
 
+const deleteCompetition = (competitionId) => {
+  return axios.delete(`${baseUrl}/${competitionId}`)
+}
+
 export default {
   fetchCompetitions,
   create,
@@ -35,4 +39,5 @@ export default {
   addQuestionToCompetition,
   getCompetitionById,
   isInCompetitionTime,
+  deleteCompetition,
 }

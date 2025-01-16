@@ -33,6 +33,7 @@ const linkCompetitionToEvent = async (eventId, competitionTitle) => {
 const deleteEvent = (eventId) => {
   return axios.delete(`${baseUrl}/${eventId}`)
 }
+
 export default {
   create,
   fetchEvents,

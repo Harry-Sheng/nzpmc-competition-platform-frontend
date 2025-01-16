@@ -98,6 +98,25 @@ const AdminDashboard = ({ users }) => {
     }
   }
 
+  const deleteCompetition = async (competitionId) => {
+    try {
+      const confirmation = window.confirm(
+        "Are you sure you want to delete " + competitionId + "?"
+      )
+      if (confirmation) {
+        await competitionService.deleteCompetition(competitionId)
+        setCompetitions((prevCompetitions) =>
+          prevCompetitions.filter((c) => c.title !== competitionId)
+        )
+      }
+    } catch (error) {
+      console.error("Failed to delete competition:", error)
+      alert(
+        "An error occurred while deleting the competition. Please try again."
+      )
+    }
+  }
+
   return (
     <>
       <Row className="g-4">
@@ -135,7 +154,11 @@ const AdminDashboard = ({ users }) => {
             </Card.Header>
             <Card.Body className="scrollable-small">
               {competitions.map((competition, index) => (
-                <AdminCompetitionCard key={index} competition={competition} />
+                <AdminCompetitionCard
+                  key={index}
+                  competition={competition}
+                  deleteCompetition={deleteCompetition}
+                />
               ))}
             </Card.Body>
           </Card>
