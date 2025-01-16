@@ -87,8 +87,11 @@ const CompetitionPage = () => {
   }
 
   const handleSubmit = () => {
-    setFinishedCompetition(true)
-    saveAttempt()
+    const confirmation = window.confirm("Are you sure you want to submit?")
+    if (confirmation) {
+      setFinishedCompetition(true)
+      saveAttempt()
+    }
   }
 
   const saveAttempt = async () => {
