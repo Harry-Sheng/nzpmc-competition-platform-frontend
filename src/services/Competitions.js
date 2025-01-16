@@ -6,7 +6,13 @@ const fetchCompetitions = () => {
 }
 
 const create = (newObject) => {
-  return axios.post(baseUrl, newObject)
+  const user = JSON.parse(localStorage.getItem("loggedUser"))
+
+  return axios.post(baseUrl, newObject, {
+    headers: {
+      Authorization: `Bearer ${user.token}`,
+    },
+  })
 }
 
 const fetchQuestions = (competitionId) => {
@@ -14,10 +20,17 @@ const fetchQuestions = (competitionId) => {
 }
 
 const addQuestionToCompetition = (competitionId, questionTitle) => {
-  console.log(questionTitle)
-  return axios.post(`${baseUrl}/${competitionId}/questions`, {
-    title: questionTitle,
-  })
+  const user = JSON.parse(localStorage.getItem("loggedUser"))
+
+  return axios.post(
+    `${baseUrl}/${competitionId}/questions`,
+    { title: questionTitle },
+    {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    }
+  )
 }
 
 const getCompetitionById = (competitionId) => {
@@ -29,7 +42,13 @@ const isInCompetitionTime = (competitionId) => {
 }
 
 const deleteCompetition = (competitionId) => {
-  return axios.delete(`${baseUrl}/${competitionId}`)
+  const user = JSON.parse(localStorage.getItem("loggedUser"))
+
+  return axios.delete(`${baseUrl}/${competitionId}`, {
+    headers: {
+      Authorization: `Bearer ${user.token}`,
+    },
+  })
 }
 
 export default {

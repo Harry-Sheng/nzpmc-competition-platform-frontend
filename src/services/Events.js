@@ -2,7 +2,13 @@ import axios from "axios"
 const baseUrl = "http://localhost:8080/api/events"
 
 const create = (newObject) => {
-  return axios.post(baseUrl, newObject)
+  const user = JSON.parse(localStorage.getItem("loggedUser"))
+
+  return axios.post(baseUrl, newObject, {
+    headers: {
+      Authorization: `Bearer ${user.token}`,
+    },
+  })
 }
 
 const fetchEvents = () => {
@@ -24,14 +30,30 @@ const joinEvent = async (eventId, token) => {
 }
 
 const linkCompetitionToEvent = async (eventId, competitionTitle) => {
-  const response = await axios.put(`${baseUrl}/${eventId}/competition`, {
-    title: competitionTitle,
-  })
+  const user = JSON.parse(localStorage.getItem("loggedUser"))
+
+  const response = await axios.put(
+    `${baseUrl}/${eventId}/competition`,
+    {
+      title: competitionTitle,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    }
+  )
   return response.data
 }
 
 const deleteEvent = (eventId) => {
-  return axios.delete(`${baseUrl}/${eventId}`)
+  const user = JSON.parse(localStorage.getItem("loggedUser"))
+
+  return axios.delete(`${baseUrl}/${eventId}`, {
+    headers: {
+      Authorization: `Bearer ${user.token}`,
+    },
+  })
 }
 
 export default {

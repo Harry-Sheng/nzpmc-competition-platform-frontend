@@ -12,7 +12,13 @@ const create = (newObject) => {
 }
 
 const getUsers = () => {
-  return axios.get(baseUrl)
+  const user = JSON.parse(localStorage.getItem("loggedUser"))
+
+  return axios.get(baseUrl, {
+    headers: {
+      Authorization: `Bearer ${user.token}`,
+    },
+  })
 }
 
 const deleteEntries = (id) => {
@@ -51,7 +57,13 @@ const updateUserName = async (newName, token) => {
 }
 
 const deleteUser = (userId) => {
-  return axios.delete(`${baseUrl}/${userId}`)
+  const user = JSON.parse(localStorage.getItem("loggedUser"))
+
+  return axios.delete(`${baseUrl}/${userId}`, {
+    headers: {
+      Authorization: `Bearer ${user.token}`,
+    },
+  })
 }
 
 export default {

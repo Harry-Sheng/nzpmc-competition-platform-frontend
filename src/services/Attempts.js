@@ -11,8 +11,14 @@ const generateResults = (competitionId) => {
 }
 
 const saveAttempt = (competitionId, attempt) => {
+  const user = JSON.parse(localStorage.getItem("loggedUser"))
   console.log("attempt", attempt)
-  return axios.post(`${baseUrl}/${competitionId}`, attempt)
+  console.log("user", user)
+  return axios.post(`${baseUrl}/${competitionId}`, attempt, {
+    headers: {
+      Authorization: `Bearer ${user.token}`,
+    },
+  })
 }
 
 export default {
