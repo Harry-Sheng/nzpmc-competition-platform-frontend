@@ -9,8 +9,9 @@ import ResultModal from "./ResultModal"
 import AdminEventCard from "./AdminEventCard"
 import AdminCompetitionCard from "./AdminCompetitionCard"
 import AdminAccountCard from "./AdminAccountCard"
+import userService from "../services/User"
 
-const AdminDashboard = ({ users }) => {
+const AdminDashboard = ({ users, setUsers }) => {
   const [events, setEvents] = useState([])
   const [competitions, setCompetitions] = useState([])
   const [showResultModal, setShowResultModal] = useState(false)
@@ -117,6 +118,23 @@ const AdminDashboard = ({ users }) => {
     }
   }
 
+  const deleteUser = async (userId) => {
+    try {
+      const confirmation = window.confirm(
+        "Are you sure you want to delete user " + userId + "?"
+      )
+      if (confirmation) {
+        await userService.deleteUser(userId)
+        setUsers((prevUsers) =>
+          prevUsers.filter((user) => user.email !== userId)
+        )
+      }
+    } catch (error) {
+      console.error("Failed to delete user:", error)
+      alert("An error occurred while deleting the user. Please try again.")
+    }
+  }
+
   return (
     <>
       <Row className="g-4">
@@ -170,7 +188,11 @@ const AdminDashboard = ({ users }) => {
             </Card.Header>
             <Card.Body className="scrollable-small">
               {users.map((user, index) => (
-                <AdminAccountCard key={index} user={user} />
+                <AdminAccountCard
+                  key={index}
+                  user={user}
+                  deleteUser={deleteUser}
+                />
               ))}
             </Card.Body>
           </Card>

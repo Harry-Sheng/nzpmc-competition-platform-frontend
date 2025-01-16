@@ -50,6 +50,10 @@ const updateUserName = async (newName, token) => {
   return response.data
 }
 
+const deleteUser = (userId) => {
+  return axios.delete(`${baseUrl}/${userId}`)
+}
+
 export default {
   signUp,
   create,
@@ -57,4 +61,5 @@ export default {
   fetchUserEvents,
   updateUserName,
   getUsers,
+  deleteUser,
 }

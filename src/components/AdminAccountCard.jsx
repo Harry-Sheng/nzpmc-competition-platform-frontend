@@ -1,8 +1,8 @@
 import React from "react"
-import { Card, Col } from "react-bootstrap"
+import { Card, Col, Button } from "react-bootstrap"
 import Exam from "../assets/exam.png"
 
-const AdminAccountCard = ({ user }) => (
+const AdminAccountCard = ({ user, deleteUser }) => (
   <Card className="mb-3 shadow-sm rounded">
     <Card.Body className="d-flex align-items-center">
       <Col xs={3}>
@@ -25,6 +25,11 @@ const AdminAccountCard = ({ user }) => (
         ) : (
           <p className="text-muted mb-0">No Events Available</p>
         )}
+      </Col>
+      <Col xs={2} className="d-flex flex-column justify-content-end">
+        <Button variant="danger" onClick={() => deleteUser(user.email)}>
+          Delete
+        </Button>
       </Col>
     </Card.Body>
   </Card>

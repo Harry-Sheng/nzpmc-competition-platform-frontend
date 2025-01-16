@@ -27,7 +27,7 @@ const AdminPage = () => {
         subtitle={"Here is the Admin Dashboard"}
       />
       <div className="container">
-        <AdminDashboard users={users}></AdminDashboard>
+        <AdminDashboard users={users} setUsers={setUsers}></AdminDashboard>
       </div>
     </div>
   )
