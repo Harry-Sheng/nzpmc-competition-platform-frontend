@@ -1,6 +1,6 @@
 # NZPMC Competition Platform Demo
 
-This is a competition platform demo which support logging, register for events, join competition, competes, an admin dashboard and much more. There is even a chatbot to answer all your questions about NZPMC. Built with React, Spring Boot, and MongoDB
+This is a competition platform demo that supports logging, registering for events, joining competitions, competing in competitions, an admin dashboard and much more. There is even a chatbot that can answer all your questions about NZPMC. Built with React, Spring Boot, and MongoDB
 
 ## Table of Contents
 
@@ -10,11 +10,11 @@ This is a competition platform demo which support logging, register for events, 
 4. [CodeBase Structure](#codebase-structure)
 5. [Key Decisions](#key-decisions)
 6. [Images](#images)
-7. [Backend End code](#backend-end-code)
+7. [Front End code](#front-end-code)
 
 ## Features
 
-- OpenAI chatbot integration for answering NZPMC related questions for users.
+- OpenAI chatbot integration for answering NZPMC-related questions for users.
 - Responsive design for desktop and mobile users using react-bootstrap.
 - Global state management using React Context.
 - User authentication and authorization (JWT).
@@ -36,13 +36,13 @@ This is a competition platform demo which support logging, register for events, 
 1. Clone the repository
 
 ```bash
-git clone https://github.com/Harry-Sheng/nzpmc-registration-platform-frontend
+git clone https://github.com/Harry-Sheng/nzpmc-competition-platform-frontend
 ```
 
 2. Install dependencies
 
 ```bash
-cd nzpmc-registration-platform-frontend
+cd nzpmc-competition-platform-frontend
 npm install
 ```
 
@@ -57,12 +57,12 @@ npm run dev
 1. Clone the repository
 
 ```bash
-git clone https://github.com/Harry-Sheng/nzpmc-registration-platform-backend
+git clone https://github.com/Harry-Sheng/nzpmc-competition-platform-backend
 ```
 
 2. Set environment variables
 
-go to resources/application.properties and set the following variables
+Go to resources/application.properties and set the following variables
 
 ```bash
 spring.application.name={your application name}
@@ -78,8 +78,8 @@ openai.api.key = {your openai api key}
 3. Install dependencies
 
 ```bash
-cd nzpmc-registration-platform-backend/SpringBootBackend/CompetitionPlatform
-./gradlew build //This should work, however I have not tested it yet. Message me if it does not work
+cd nzpmc-competition-platform-backend/SpringBootBackend/CompetitionPlatform
+./gradlew build //This should work; however, I have not tested it yet. Message me if it does not work
 ```
 
 4. run the application
@@ -151,4 +151,4 @@ src
 
 ## Backend End code
 
-https://github.com/Harry-Sheng/nzpmc-registration-platform-backend
+https://github.com/Harry-Sheng/nzpmc-competition-platform-backend
