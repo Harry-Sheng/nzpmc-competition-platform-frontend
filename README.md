@@ -2,6 +2,10 @@
 
 This is a competition platform demo that supports logging, registering for events, joining competitions, competing in competitions, an admin dashboard and much more. There is even a chatbot that can answer all your questions about NZPMC. Built with React, Spring Boot, and MongoDB
 
+## Demo
+
+https://www.youtube.com/watch?v=Ni5umYMw1xY&list=LL&index=1
+
 ## Table of Contents
 
 1. [Features](#features)
