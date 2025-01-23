@@ -15,11 +15,17 @@ This is a competition platform demo that supports logging, registering for event
 ## Features
 
 - OpenAI chatbot integration for answering NZPMC-related questions for users.
-- Responsive design for desktop and mobile users using react-bootstrap.
-- Global state management using React Context.
+- User register, sign in/out, and edit name.
+- User able to sign up for the event.
+- User able to join competitions, auto submission, timer, and progress bar.
 - User authentication and authorization (JWT).
+- Admin able to see results, users, competition, and events.
+- Admin able to link competition to the event.
+- Admin able to delete users, competitions and events.
+- Admin able to create questions and add to the competition. Also able to reuse questions.
+- Admin able to create completions, and events.
 - Protected routes for authenticated users.
-- CRUD functionality for tasks.
+- Responsive design for desktop and mobile users using react-bootstrap.
 
 ## Technologies Used
 
@@ -149,6 +155,6 @@ src
 ![competitionpage](./assets/competitionpage.png)
 ![chatbot](./assets/chatbot.png)
 
-## Backend End code
+## Front End code
 
-https://github.com/Harry-Sheng/nzpmc-competition-platform-backend
+https://github.com/Harry-Sheng/nzpmc-competition-platform-frontend
